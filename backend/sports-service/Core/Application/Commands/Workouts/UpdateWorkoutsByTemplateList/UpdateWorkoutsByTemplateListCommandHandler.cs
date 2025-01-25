@@ -1,0 +1,98 @@
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using sports_service.Core.Application.Common.Exceptions;
+using sports_service.Core.Application.Common.Extensions;
+using sports_service.Core.Application.Interfaces.Repositories;
+using sports_service.Core.Domain.Templates;
+using sports_service.Core.Domain.Workouts;
+
+namespace sports_service.Core.Application.Commands.Workouts.UpdateWorkoutsByTemplateList
+{
+    public class UpdateWorkoutsByTemplateListCommandHandler
+        : IRequestHandler<UpdateWorkoutsByTemplateListCommand>
+    {
+        private readonly ISportServiseDbContext _sportServiseDbContext;
+
+        public UpdateWorkoutsByTemplateListCommandHandler(ISportServiseDbContext sportServiseDbContext)
+        {
+            _sportServiseDbContext = sportServiseDbContext;
+        }
+
+        public async Task Handle(UpdateWorkoutsByTemplateListCommand request,
+            CancellationToken cancellationToken)
+        {
+            if (request.UserId == Guid.Empty)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            if (request.TemplateWorkoutId == Guid.Empty)
+            {
+                throw new ArgumentException(nameof(request.TemplateWorkoutId));
+            }
+
+            var templateWorkout = await _sportServiseDbContext.TemplateWorkouts
+                .FirstOrDefaultAsync(t => t.Id == request.TemplateWorkoutId, cancellationToken);
+
+            if (templateWorkout == null)
+            {
+                throw new NotFoundEntityException(nameof(TemplateWorkout),
+                    request.TemplateWorkoutId);
+            }
+
+            if (templateWorkout.UserId != request.UserId)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            var updateEntityWorkout = new List<Workout>();
+
+            foreach (var entityWorkoutId in request.WorkoutsId)
+            {
+                var entityWorkout = await _sportServiseDbContext.Workouts
+                    .FirstOrDefaultAsync(w => w.UserId == request.UserId
+                    && w.Id == entityWorkoutId, cancellationToken);
+
+                if (entityWorkout != null)
+                {
+                    updateEntityWorkout.Add(entityWorkout);
+                    _sportServiseDbContext.BlocksCardio.RemoveRange(entityWorkout.BlocksCardio);
+                    _sportServiseDbContext.BlocksStrenght.RemoveRange(entityWorkout.BlocksStrenght);
+                    _sportServiseDbContext.BlocksSplit.RemoveRange(entityWorkout.BlocksSplit);
+                    _sportServiseDbContext.BlocksWarmUp.RemoveRange(entityWorkout.BlocksWarmUp);
+
+                    var entityTemplateBlockCardioList = templateWorkout.TemplatesBlockCardio
+                        .ToWorkoutBlock(entityWorkout);
+
+                    _sportServiseDbContext.BlocksCardio.AddRange(entityTemplateBlockCardioList);
+
+                    var entityBlockStrenghtList = templateWorkout.TemplatesBlockStrenght
+                        .ToWorkoutBlock(entityWorkout);
+
+                    _sportServiseDbContext.BlocksStrenght.AddRange(entityBlockStrenghtList);
+
+                    _sportServiseDbContext.SetsInBlockStrength.AddRange(entityBlockStrenghtList
+                        .GetSetsList());
+
+                    var entityBlockSplitList = templateWorkout.TemplatesBlockSplit
+                        .ToWorkoutBlock(entityWorkout);
+
+                    _sportServiseDbContext.BlocksSplit.AddRange(entityBlockSplitList);
+
+                    _sportServiseDbContext.ExercisesInBlockSplit.AddRange(entityBlockSplitList
+                        .GetExercisesList());
+
+                    var entityBlockWarmUpList = templateWorkout.TemplatesBlockWarmUp
+                        .ToWorkoutBlock(entityWorkout);
+
+                    _sportServiseDbContext.BlocksWarmUp.AddRange(entityBlockWarmUpList);
+
+                    _sportServiseDbContext.ExercisesInBlockWarmUp.AddRange(entityBlockWarmUpList
+                        .GetExercisesList());
+                }
+            }
+
+            await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
+        }
+    }
+}

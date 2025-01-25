@@ -1,0 +1,67 @@
+﻿using Microsoft.Extensions.Options;
+using sports_service.Core.Application.Interfaces.Auth;
+using System.IdentityModel.Tokens.Jwt;
+
+namespace sports_service.Infrastructure.Jwt
+{
+    public class JwtProvider : IJwtProvider
+    {
+        private readonly JwtOptions _options;
+
+        public JwtProvider(IOptions<JwtOptions> options)
+        {
+            _options = options.Value;
+        }
+
+        public Guid GetUserIdByToken(string tokenValue)
+        {
+            Guid userId = Guid.Empty;
+            JwtSecurityToken token;
+            try
+            {
+                token = new JwtSecurityTokenHandler().ReadJwtToken(tokenValue);
+                userId = Guid.Parse(token.Claims.Where(c => c.Type == "userId").Select(c => c.Value).SingleOrDefault());
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return userId;
+        }
+
+        public string GetUserRoleByToken(string tokenValue)
+        {
+            string userRole = string.Empty;
+            JwtSecurityToken token;
+            try
+            {
+                token = new JwtSecurityTokenHandler().ReadJwtToken(tokenValue);
+                userRole = token.Claims.Where(c => c.Type == "userId").Select(c => c.Value).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return userRole;
+        }
+
+        public string GetUserEmailByToken(string tokenValue)
+        {
+            string userEmail = string.Empty;
+            JwtSecurityToken token;
+            try
+            {
+                token = new JwtSecurityTokenHandler().ReadJwtToken(tokenValue);
+                userEmail = token.Claims.Where(c => c.Type == "userEmail").Select(c => c.Value).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return userEmail;
+        }
+    }
+}

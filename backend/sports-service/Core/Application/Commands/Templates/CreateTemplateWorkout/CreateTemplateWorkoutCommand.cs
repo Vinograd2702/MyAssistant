@@ -1,0 +1,24 @@
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.IdentityModel.Tokens;
+using sports_service.Core.Application.Common.Mappings;
+using sports_service.Core.Application.DTOs.Templates.Blocks;
+using sports_service.Presentation.Contract;
+
+namespace sports_service.Core.Application.Commands.Templates.CreateTemplateWorkout
+{
+    public class CreateTemplateWorkoutCommand : IRequest<Guid>, IMapWith<CreateTemplateWorkoutRequest>
+    {
+        public Guid UserId { get; set; }
+        public string Name { get; set; } = "";
+        public string? Description { get; set; }
+        public List<TemplateBlockCardioDTO> TemplatesBlockCardioDTO { get; set; }
+            = new List<TemplateBlockCardioDTO>();
+        public List<TemplateBlockStrenghtDTO> TemplatesBlockStrenghtDTO { get; set; }
+            = new List<TemplateBlockStrenghtDTO>();
+        public List<TemplateBlockSplitDTO> TemplatesBlockSplitDTO { get; set; }
+            = new List<TemplateBlockSplitDTO>();
+        public List<TemplateBlockWarmUpDTO> TemplatesBlockWarmUpDTO { get; set; }
+            = new List<TemplateBlockWarmUpDTO>();
+    }
+}
