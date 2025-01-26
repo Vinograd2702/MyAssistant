@@ -10,7 +10,17 @@ namespace auth_servise.tests.Common
             return user.Id.ToString();
         }
 
+        public string GetUserEmailByToken(string tokenValue)
+        {
+            throw new NotImplementedException();
+        }
+
         public Guid GetUserIdByToken(string tokenValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetUserRoleByToken(string tokenValue)
         {
             throw new NotImplementedException();
         }

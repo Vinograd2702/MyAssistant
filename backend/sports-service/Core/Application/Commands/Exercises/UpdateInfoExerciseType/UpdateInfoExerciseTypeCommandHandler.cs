@@ -39,9 +39,11 @@ namespace sports_service.Core.Application.Commands.Exercises.UpdateInfoExerciseT
                 throw new ArgumentException(nameof(request.Name));
             }
 
-            var understudyNameExerciseType = _sportServiseDbContext.ExerciseTypes.FirstOrDefault(t => t.Name == request.Name);
+            var understudyNameExerciseType = _sportServiseDbContext.ExerciseTypes
+                .FirstOrDefault(t => t.UserId == request.UserId && t.Name == request.Name
+                && t.IsDeleted == false && t.Id != request.Id);
 
-            if (understudyNameExerciseType != null && understudyNameExerciseType.Id != request.Id && understudyNameExerciseType.IsDeleted != true)
+            if (understudyNameExerciseType != null)
             {
                 throw new NameEntityIsAlreadyUsedForThisUserException(request.Name, nameof(ExerciseType), request.UserId);
             }

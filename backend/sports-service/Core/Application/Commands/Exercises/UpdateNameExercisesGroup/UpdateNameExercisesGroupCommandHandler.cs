@@ -40,18 +40,13 @@ namespace sports_service.Core.Application.Commands.Exercises.UpdateNameExercises
                 throw new ArgumentException(nameof(request.Name));
             }
 
-            var understudyNameGroup = _sportServiseDbContext.ExerciseGroups.FirstOrDefault(g => g.Name == request.Name);
+            var understudyNameGroup = _sportServiseDbContext.ExerciseGroups
+                .FirstOrDefault(g => g.UserId == request.UserId && g.Name == request.Name
+                && g.IsDeleted == false && g.Id != request.Id);
 
             if (understudyNameGroup != null)
             {
-                if (understudyNameGroup.Id != request.Id && understudyNameGroup.IsDeleted != true)
-                {
-                    throw new NameEntityIsAlreadyUsedForThisUserException(request.Name, nameof(ExerciseGroup), request.UserId);
-                }
-                else
-                {
-                    return;
-                }
+                throw new NameEntityIsAlreadyUsedForThisUserException(request.Name, nameof(ExerciseGroup), request.UserId);
             }
 
             entity.Name = request.Name;

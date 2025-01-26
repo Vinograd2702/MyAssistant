@@ -31,7 +31,7 @@ namespace sports_service.Core.Application.Commands.Exercises.CreateExerciseType
 
             var understudyNameExercise = await _sportServiseDbContext.ExerciseTypes
                 .FirstOrDefaultAsync(exercise => exercise.UserId == request.UserId
-                && exercise.Name == exercise.Name);
+                && exercise.Name == exercise.Name && exercise.IsDeleted == false);
 
             if (understudyNameExercise != null && understudyNameExercise.IsDeleted != true)
             {
@@ -43,8 +43,20 @@ namespace sports_service.Core.Application.Commands.Exercises.CreateExerciseType
                 UserId = request.UserId,
                 Name = request.Name,
                 Description = request.Description,
-                ExerciseGroupId = request.ExerciseGroupId
             };
+
+            if (request.ExerciseGroupId != null)
+            {
+                var group = await _sportServiseDbContext.ExerciseGroups
+                    .FirstOrDefaultAsync(group => group.Id == request.ExerciseGroupId);
+
+                if (group == null || group.IsDeleted == true)
+                {
+                    throw new NotFoundEntityException(nameof(ExerciseGroup), request.ExerciseGroupId);
+                }
+
+                entity.ExerciseGroup = group;
+            }
 
             await _sportServiseDbContext.ExerciseTypes.AddAsync(entity);
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
