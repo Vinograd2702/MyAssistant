@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sport_service.tests.Common;
-using sports_service.Core.Application.Commands.Exercises.CreateExercisesGroup;
 using sports_service.Core.Application.Commands.Exercises.CreateExerciseType;
 using sports_service.Core.Application.Common.Exceptions;
-using System.Text.RegularExpressions;
 
 namespace sport_service.tests.Commands.Exercises
 {
@@ -153,6 +151,54 @@ namespace sport_service.tests.Commands.Exercises
             // Act
             // Assert
             await Assert.ThrowsAsync<ArgumentException>(async () =>
+            await handler.Handle(
+                new CreateExerciseTypeCommand
+                {
+                    UserId = userId,
+                    Name = name,
+                },
+                CancellationToken.None));
+        }
+
+        [Fact]
+        public async Task CreateExercisesGroupHandler_UnderstudyByAnotherUserNameGroup_Success()
+        {
+            // Arrange
+            var handler = new CreateExerciseTypeCommandHandler(_context);
+            var userId = SportContextFactory.OriginalTestUserId;
+            var name = SportContextFactory.UnderstudyByAnotherUserNameType;
+
+            // Act
+            var newTypeId = await handler.Handle(
+                new CreateExerciseTypeCommand
+                {
+                    UserId = userId,
+                    Name = name,
+                },
+                CancellationToken.None);
+
+            // Assert
+            var createdTypeFromDb = await _context.ExerciseTypes
+                .SingleOrDefaultAsync(t => t.Id == newTypeId);
+
+            Assert.NotNull(createdTypeFromDb);
+            Assert.Equal(name, createdTypeFromDb.Name);
+            Assert.Equal(userId, createdTypeFromDb.UserId);
+            Assert.False(createdTypeFromDb.IsDeleted);
+            Assert.Null(createdTypeFromDb.ExerciseGroup);
+        }
+
+        [Fact]
+        public async Task CreateExercisesGroupHandler_UnderstudyByOriginalUserNameGroup_Failed()
+        {
+            // Arrange
+            var handler = new CreateExerciseTypeCommandHandler(_context);
+            var userId = SportContextFactory.OriginalTestUserId;
+            var name = SportContextFactory.UnderstudyByOriginalUserNameType;
+
+            // Act
+            // Assert
+            await Assert.ThrowsAsync<NameEntityIsAlreadyUsedForThisUserException>(async () =>
             await handler.Handle(
                 new CreateExerciseTypeCommand
                 {

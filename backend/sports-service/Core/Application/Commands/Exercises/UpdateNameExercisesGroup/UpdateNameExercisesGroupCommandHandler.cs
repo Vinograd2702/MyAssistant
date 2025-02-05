@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using sports_service.Core.Application.Common.Exceptions;
 using sports_service.Core.Application.Interfaces.Repositories;
 using sports_service.Core.Domain.Exercises;
@@ -23,14 +24,16 @@ namespace sports_service.Core.Application.Commands.Exercises.UpdateNameExercises
                 throw new UnauthorizedAccessException();
             }
 
-            var entity = _sportServiseDbContext.ExerciseGroups.FirstOrDefault(g => g.Id == request.Id);
+            var entity = await _sportServiseDbContext.ExerciseGroups
+                .FirstOrDefaultAsync(g => g.Id == request.Id 
+                && g.IsDeleted == false);
 
             if (entity == null)
             {
                 throw new NotFoundEntityException(nameof(ExerciseGroup), request.Id);
             }
 
-            if (entity.UserId == request.UserId)
+            if (entity.UserId != request.UserId)
             {
                 throw new UnauthorizedAccessException();
             }
@@ -40,8 +43,8 @@ namespace sports_service.Core.Application.Commands.Exercises.UpdateNameExercises
                 throw new ArgumentException(nameof(request.Name));
             }
 
-            var understudyNameGroup = _sportServiseDbContext.ExerciseGroups
-                .FirstOrDefault(g => g.UserId == request.UserId && g.Name == request.Name
+            var understudyNameGroup = await _sportServiseDbContext.ExerciseGroups
+                .FirstOrDefaultAsync(g => g.UserId == request.UserId && g.Name == request.Name
                 && g.IsDeleted == false && g.Id != request.Id);
 
             if (understudyNameGroup != null)

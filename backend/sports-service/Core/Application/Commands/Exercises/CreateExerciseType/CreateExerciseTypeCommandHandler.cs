@@ -31,7 +31,7 @@ namespace sports_service.Core.Application.Commands.Exercises.CreateExerciseType
 
             var understudyNameExercise = await _sportServiseDbContext.ExerciseTypes
                 .FirstOrDefaultAsync(exercise => exercise.UserId == request.UserId
-                && exercise.Name == exercise.Name && exercise.IsDeleted == false);
+                && exercise.Name == request.Name && exercise.IsDeleted == false);
 
             if (understudyNameExercise != null && understudyNameExercise.IsDeleted != true)
             {

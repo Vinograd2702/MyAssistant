@@ -23,19 +23,35 @@ namespace sports_service.Core.Application.Commands.Exercises.UpdateParentExercis
                 throw new UnauthorizedAccessException();
             }
 
-            var entity = _sportServiseDbContext.ExerciseGroups.FirstOrDefault(g => g.Id == request.Id);
+            var entity = _sportServiseDbContext.ExerciseGroups
+                .FirstOrDefault(g => g.Id == request.Id
+                && g.IsDeleted == false);
 
             if (entity == null)
             {
                 throw new NotFoundEntityException(nameof(ExerciseGroup), request.Id);
             }
 
-            if (entity.UserId == request.UserId)
+            if (entity.UserId != request.UserId)
             {
                 throw new UnauthorizedAccessException();
             }
 
-            entity.ParentGroupId = request.ParentGroupId;
+            var parentGroup = _sportServiseDbContext.ExerciseGroups
+                .FirstOrDefault(g => g.Id == request.ParentGroupId
+                && g.IsDeleted == false);
+
+            if (parentGroup == null)
+            {
+                throw new NotFoundEntityException(nameof(ExerciseGroup), request.Id);
+            }
+
+            if (parentGroup.UserId != request.UserId)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            entity.ParentGroup = parentGroup;
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
         }

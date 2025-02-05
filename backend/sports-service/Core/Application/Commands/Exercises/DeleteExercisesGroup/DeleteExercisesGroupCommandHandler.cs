@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.IdentityModel.Tokens;
 using sports_service.Core.Application.Common.Exceptions;
 using sports_service.Core.Application.Interfaces.Repositories;
 using sports_service.Core.Domain.Exercises;
@@ -30,7 +29,7 @@ namespace sports_service.Core.Application.Commands.Exercises.DeleteExercisesGrou
                 throw new NotFoundEntityException(nameof(ExerciseGroup), request.Id);
             }
 
-            if (entity.UserId == request.UserId)
+            if (entity.UserId != request.UserId)
             {
                 throw new UnauthorizedAccessException();
             }
@@ -39,7 +38,7 @@ namespace sports_service.Core.Application.Commands.Exercises.DeleteExercisesGrou
                 .Where(t => t.ExerciseGroupId == request.Id
                 && t.IsDeleted != true).ToList();
 
-            if (!childGroupExersiseType.Any())
+            if (childGroupExersiseType.Any())
             {
                 throw new EntityHasChildEntityException(entity.Name, nameof(ExerciseGroup), nameof(ExerciseType));
             }
@@ -48,12 +47,12 @@ namespace sports_service.Core.Application.Commands.Exercises.DeleteExercisesGrou
                 .Where(t => t.ParentGroupId == request.Id
                 && t.IsDeleted != true).ToList();
 
-            if (!childGroupExersiseGroup.Any())
+            if (childGroupExersiseGroup.Any())
             {
                 throw new EntityHasChildEntityException(entity.Name, nameof(ExerciseGroup), nameof(ExerciseGroup));
             }
 
-            _sportServiseDbContext.ExerciseGroups.Remove(entity);
+            entity.IsDeleted = true;
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
         }

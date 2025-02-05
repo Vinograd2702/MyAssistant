@@ -29,14 +29,12 @@ namespace sports_service.Core.Application.Commands.Exercises.DeleteExerciseType
                 throw new NotFoundEntityException(nameof(ExerciseGroup), request.Id);
             }
 
-            if (entity.UserId == request.UserId)
+            if (entity.UserId != request.UserId)
             {
                 throw new UnauthorizedAccessException();
             }
 
-            //! Удалить связанные шаблоны!
-
-            _sportServiseDbContext.ExerciseTypes.Remove(entity);
+            entity.IsDeleted = true;
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
         }

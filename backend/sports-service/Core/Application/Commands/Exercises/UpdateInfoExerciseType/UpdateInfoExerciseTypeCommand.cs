@@ -2,7 +2,7 @@
 
 namespace sports_service.Core.Application.Commands.Exercises.UpdateInfoExerciseType
 {
-    public class UpdateInfoExerciseTypeCommand : IRequest
+    public class UpdateNameExercisesGroupCommand : IRequest
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
