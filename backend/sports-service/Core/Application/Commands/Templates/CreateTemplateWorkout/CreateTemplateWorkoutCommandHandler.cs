@@ -1,12 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using sports_service.Core.Application.Common.Exceptions;
 using sports_service.Core.Application.Common.Extensions;
-using sports_service.Core.Application.DTOs.Templates.Blocks;
 using sports_service.Core.Application.Interfaces.Repositories;
 using sports_service.Core.Domain.Templates;
-using sports_service.Core.Domain.Templates.Blocks;
 
 namespace sports_service.Core.Application.Commands.Templates.CreateTemplateWorkout
 {
@@ -60,24 +57,18 @@ namespace sports_service.Core.Application.Commands.Templates.CreateTemplateWorko
 
             _sportServiseDbContext.TemplatesBlockStrenght.AddRange(entityTemplateBlockStrenghtList);
 
-            _sportServiseDbContext.SetsInTemplateBlockStrength.AddRange(entityTemplateBlockStrenghtList
-                .GetSetsList());
 
             var entityTemplateBlockSplitList = request.TemplatesBlockSplitDTO
                 .ToCore(entityTemplateWorkout);
 
             _sportServiseDbContext.TemplatesBlockSplit.AddRange(entityTemplateBlockSplitList);
 
-            _sportServiseDbContext.ExercisesInTemplateBlockSplit.AddRange(entityTemplateBlockSplitList
-                .GetExercisesList());
 
             var entityTemplateBlockWarmUpList = request.TemplatesBlockWarmUpDTO
                 .ToCore(entityTemplateWorkout);
 
             _sportServiseDbContext.TemplatesBlockWarmUp.AddRange(entityTemplateBlockWarmUpList);
 
-            _sportServiseDbContext.ExercisesInTemplateBlockWarmUp.AddRange(entityTemplateBlockWarmUpList
-                .GetExercisesList());
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
 

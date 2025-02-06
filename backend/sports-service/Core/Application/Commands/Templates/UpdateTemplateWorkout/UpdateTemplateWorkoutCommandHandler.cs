@@ -53,6 +53,9 @@ namespace sports_service.Core.Application.Commands.Templates.UpdateTemplateWorko
             }
 
             // ! Протестировать каскадное удаление
+            entityTemplateWorkout.Name = request.Name;
+            entityTemplateWorkout.Description = request.Description;
+
             _sportServiseDbContext.TemplatesBlockCardio.RemoveRange(entityTemplateWorkout.TemplatesBlockCardio);
             _sportServiseDbContext.TemplatesBlockStrenght.RemoveRange(entityTemplateWorkout.TemplatesBlockStrenght);
             _sportServiseDbContext.TemplatesBlockSplit.RemoveRange(entityTemplateWorkout.TemplatesBlockSplit);
@@ -68,24 +71,15 @@ namespace sports_service.Core.Application.Commands.Templates.UpdateTemplateWorko
 
             _sportServiseDbContext.TemplatesBlockStrenght.AddRange(entityTemplateBlockStrenghtList);
 
-            _sportServiseDbContext.SetsInTemplateBlockStrength.AddRange(entityTemplateBlockStrenghtList
-                .GetSetsList());
-
             var entityTemplateBlockSplitList = request.TemplatesBlockSplitDTO
                 .ToCore(entityTemplateWorkout);
 
             _sportServiseDbContext.TemplatesBlockSplit.AddRange(entityTemplateBlockSplitList);
 
-            _sportServiseDbContext.ExercisesInTemplateBlockSplit.AddRange(entityTemplateBlockSplitList
-                .GetExercisesList());
-
             var entityTemplateBlockWarmUpList = request.TemplatesBlockWarmUpDTO
                 .ToCore(entityTemplateWorkout);
 
             _sportServiseDbContext.TemplatesBlockWarmUp.AddRange(entityTemplateBlockWarmUpList);
-
-            _sportServiseDbContext.ExercisesInTemplateBlockWarmUp.AddRange(entityTemplateBlockWarmUpList
-                .GetExercisesList());
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
         }

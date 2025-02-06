@@ -18,6 +18,7 @@ namespace sports_service.Core.Application.Common.Extensions
                 UserId = templateWorkout.UserId,
                 NumberInTemplate = templateBlockDTO.NumberInTemplate,
                 ExerciseTypeId = templateBlockDTO.ExerciseTypeId,
+                ParametrName = templateBlockDTO.ParametrName,
                 ParametrValue = templateBlockDTO.ParametrValue,
                 SecondsOfDuration = templateBlockDTO.SecondsOfDuration,
                 SecondsToRest = templateBlockDTO.SecondsToRest,

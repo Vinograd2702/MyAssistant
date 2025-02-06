@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.IdentityModel.Tokens;
+﻿using MediatR;
 using sports_service.Core.Application.Common.Mappings;
 using sports_service.Core.Application.DTOs.Templates.Blocks;
 using sports_service.Presentation.Contract;

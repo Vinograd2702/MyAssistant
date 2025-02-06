@@ -1,13 +1,24 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using sports_service.Core.Domain.Exercises;
+using sports_service.Core.Domain.Templates;
+using sports_service.Core.Domain.Templates.Blocks;
 using sports_service.Infrastructure.Persistence;
+using System.Security.Cryptography;
 
 namespace sport_service.tests.Common
 {
     public class SportContextFactory
     {
         public static Guid OriginalTestUserId = Guid.Parse("A5602D24-7A06-4621-908B-563AFA422381");
+
+        // For Templates
+        public static Guid CommonExerciseTypeId = Guid.Parse("43054C54-3E26-4DB3-8EC3-74825F0597E6");
+
+        public static Guid TemplateWorkoutToDeleteId = Guid.Parse("BB628967-2CB6-4709-A01D-785A7838CE6C");
+        public static Guid TemplateWorkoutToUpdateId = Guid.Parse("EE66D26C-086A-4948-B843-DCC533F76CDE");
+
+        // For Exercise Type and Command test
         public static Guid ParentGroupId = Guid.Parse("6E6B69F5-3CD6-4E07-B690-653F939BB473");
         public static Guid DeletedParentGroupId = Guid.Parse("4121D54B-C78D-4D0D-BDAF-3E4CDA67030C");
         public static Guid GroupToDeleteId = Guid.Parse("679BABC6-BA04-4DA7-B1AE-5F39AD9F45D9");
@@ -28,7 +39,7 @@ namespace sport_service.tests.Common
         public static string UnderstudyByAnotherUserNameGroup = "UnderstudyByAnotherUserNameGroup";
         public static string UnderstudyByOriginalUserNameType = "UnderstudyByOriginalUserNameType";
         public static string UnderstudyByAnotherUserNameType = "UnderstudyByAnotherUserNameType";
-
+        
         public static SportServiseDbContext Create()
         {
             var connection = new SqliteConnection("DataSource=:memory:");
@@ -209,11 +220,206 @@ namespace sport_service.tests.Common
                     UserId = OriginalTestUserId,
                     Name = "ChildTypeToUpdate",
                     ExerciseGroupId = GroupIdOldParent
+                },
+                // Тип упражнения для шаблона
+                new ExerciseType
+                {
+                    Id = CommonExerciseTypeId,
+                    UserId = OriginalTestUserId,
+                    Name = "TestExerciseTypeForTemplate",
+                    Description = "DescForTestExerciseTypeForTemplate"
+                }
+            };
+
+            var TBStToDeleteId = Guid.NewGuid();
+            var TBStToUpdateId = Guid.NewGuid();
+            var TBSpToDeleteId = Guid.NewGuid();
+            var TBSpToUpdateId = Guid.NewGuid();
+            var TBWToDeleteId = Guid.NewGuid();
+            var TBWToUpdateId = Guid.NewGuid();
+
+            var testArrayOfTemplateWorkout = new TemplateWorkout[]
+            {
+                // Для шаблон проверки удаления
+                new TemplateWorkout
+                {
+                    Id = TemplateWorkoutToDeleteId,
+                    UserId = OriginalTestUserId,
+                    Name = "Name Template To Delete",
+                    Description = "Name Template To Delete",
+                    TemplatesBlockCardio = 
+                    {
+                        new TemplateBlockCardio
+                        {
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 0,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            ParametrValue = 11,
+                            ParametrName = "Name",
+                            SecondsOfDuration = 12,
+                            SecondsToRest = 13,
+                            TemplateWorkoutId = TemplateWorkoutToDeleteId
+                        }
+                    },
+                    TemplatesBlockStrenght =
+                    {
+                        new TemplateBlockStrenght
+                        {
+                            Id = TBStToDeleteId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 1,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInTemplateBlockStrength
+                                {
+                                    TemplateBlockStrenghtId = TBStToDeleteId,
+                                    SetNumber = 0,
+                                    Weight = 31,
+                                    Reps = 31
+                                }
+                            },
+                            SecondsToRest = 22,
+                            TemplateWorkoutId = TemplateWorkoutToDeleteId
+                        }
+                    },
+                    TemplatesBlockSplit =
+                    {
+                        new TemplateBlockSplit
+                        {
+                            Id = TBSpToDeleteId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 2,
+                            NumberOfCircles = 2,
+                            Exercises =
+                            {
+                                new ExerciseInTemplateBlockSplit
+                                {
+                                    TemplateBlockSplitId = TBSpToDeleteId,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    Weight = 51,
+                                    Reps = 52
+                                }
+                            },
+                            SecondsToRest = 41,
+                            TemplateWorkoutId = TemplateWorkoutToDeleteId
+                        }
+                    },
+                    TemplatesBlockWarmUp =
+                    {
+                        new TemplateBlockWarmUp
+                        {
+                            Id = TBWToDeleteId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 3,
+                            Exercises =
+                            {
+                                new ExerciseInTemplateBlockWarmUp
+                                {
+                                    TemplateBlockWarmUpId = TBWToDeleteId,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            TemplateWorkoutId = TemplateWorkoutToDeleteId
+                        }
+                    }
+                },
+
+                // Для шаблон проверки обновления
+                new TemplateWorkout
+                {
+                    Id= TemplateWorkoutToUpdateId,
+                    UserId = OriginalTestUserId,
+                    Name = "Name Template Brfore Update",
+                    Description = "Name Template Brfore Update",
+                    TemplatesBlockCardio =
+                    {
+                        new TemplateBlockCardio
+                        {
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 0,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            ParametrValue = 11,
+                            ParametrName = "Name",
+                            SecondsOfDuration = 12,
+                            SecondsToRest = 13,
+                            TemplateWorkoutId = TemplateWorkoutToUpdateId
+                        }
+                    },
+                    TemplatesBlockStrenght =
+                    {
+                        new TemplateBlockStrenght
+                        {
+                            Id = TBStToUpdateId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 1,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInTemplateBlockStrength
+                                {
+                                    TemplateBlockStrenghtId = TBStToUpdateId,
+                                    SetNumber = 0,
+                                    Weight = 31,
+                                    Reps = 31
+                                }
+                            },
+                            SecondsToRest = 22,
+                            TemplateWorkoutId = TemplateWorkoutToUpdateId
+                        }
+                    },
+                    TemplatesBlockSplit =
+                    {
+                        new TemplateBlockSplit
+                        {
+                            Id = TBSpToUpdateId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 2,
+                            NumberOfCircles = 2,
+                            Exercises =
+                            {
+                                new ExerciseInTemplateBlockSplit
+                                {
+                                    TemplateBlockSplitId = TBSpToUpdateId,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    Weight = 51,
+                                    Reps = 52
+                                }
+                            },
+                            SecondsToRest = 41,
+                            TemplateWorkoutId = TemplateWorkoutToUpdateId
+                        }
+                    },
+                    TemplatesBlockWarmUp =
+                    {
+                        new TemplateBlockWarmUp
+                        {
+                            Id = TBWToUpdateId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 3,
+                            Exercises =
+                            {
+                                new ExerciseInTemplateBlockWarmUp
+                                {
+                                    TemplateBlockWarmUpId = TBWToUpdateId,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            TemplateWorkoutId = TemplateWorkoutToUpdateId
+                        }
+                    }
                 }
             };
 
             context.ExerciseGroups.AddRange(testArrayOfExerciseGroup);
             context.ExerciseTypes.AddRange(testArrayOfExerciseType);
+            context.TemplateWorkouts.AddRange(testArrayOfTemplateWorkout);
 
             context.SaveChangesAsync();
             return context;

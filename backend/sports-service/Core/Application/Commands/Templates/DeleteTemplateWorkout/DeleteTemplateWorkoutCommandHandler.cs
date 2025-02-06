@@ -26,7 +26,7 @@ namespace sports_service.Core.Application.Commands.Templates.DeleteTemplateWorko
             var entityTemplateWorkout = await _sportServiseDbContext.TemplateWorkouts
                 .FirstOrDefaultAsync(tw => tw.Id == request.Id, cancellationToken);
 
-            if (entityTemplateWorkout != null)
+            if (entityTemplateWorkout == null)
             {
                 throw new NotFoundEntityException(nameof(TemplateWorkout), request.Id);
             }
