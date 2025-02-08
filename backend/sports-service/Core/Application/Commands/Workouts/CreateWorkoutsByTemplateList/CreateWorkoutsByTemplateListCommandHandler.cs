@@ -89,18 +89,9 @@ namespace sports_service.Core.Application.Commands.Workouts.CreateWorkoutsByTemp
 
             _sportServiseDbContext.BlocksStrenght.AddRange(entityBlockStrenghtList);
 
-            _sportServiseDbContext.SetsInBlockStrength.AddRange(entityBlockStrenghtList
-                .GetSetsList());
-
             _sportServiseDbContext.BlocksSplit.AddRange(entityBlockSplitList);
 
-            _sportServiseDbContext.ExercisesInBlockSplit.AddRange(entityBlockSplitList
-                .GetExercisesList());
-
             _sportServiseDbContext.BlocksWarmUp.AddRange(entityBlockWarmUpList);
-
-            _sportServiseDbContext.ExercisesInBlockWarmUp.AddRange(entityBlockWarmUpList
-                .GetExercisesList());
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
 

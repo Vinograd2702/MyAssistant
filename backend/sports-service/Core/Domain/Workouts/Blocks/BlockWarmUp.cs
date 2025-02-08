@@ -8,5 +8,6 @@
             = new List<ExerciseInBlockWarmUp>();
         public Guid WorkoutId { get; set; }
         public Workout? Workout { get; set; }
+        public int NumberInWorkout { get; set; }
     }
 }

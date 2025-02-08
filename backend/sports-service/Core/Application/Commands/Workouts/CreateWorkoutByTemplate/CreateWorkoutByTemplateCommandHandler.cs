@@ -1,12 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using sports_service.Core.Application.Common.Exceptions;
 using sports_service.Core.Application.Common.Extensions;
 using sports_service.Core.Application.Interfaces.Repositories;
 using sports_service.Core.Domain.Templates;
 using sports_service.Core.Domain.Workouts;
-using sports_service.Core.Domain.Workouts.Blocks;
 
 namespace sports_service.Core.Application.Commands.Workouts.CreateWorkoutByTemplate
 {
@@ -68,24 +66,15 @@ namespace sports_service.Core.Application.Commands.Workouts.CreateWorkoutByTempl
 
             _sportServiseDbContext.BlocksStrenght.AddRange(entityBlockStrenghtList);
 
-            _sportServiseDbContext.SetsInBlockStrength.AddRange(entityBlockStrenghtList
-                .GetSetsList());
-
             var entityBlockSplitList = templateWorkout.TemplatesBlockSplit
                 .ToWorkoutBlock(entityWorkout);
 
             _sportServiseDbContext.BlocksSplit.AddRange(entityBlockSplitList);
 
-            _sportServiseDbContext.ExercisesInBlockSplit.AddRange(entityBlockSplitList
-                .GetExercisesList());
-
             var entityBlockWarmUpList = templateWorkout.TemplatesBlockWarmUp
                 .ToWorkoutBlock(entityWorkout);
 
             _sportServiseDbContext.BlocksWarmUp.AddRange(entityBlockWarmUpList);
-
-            _sportServiseDbContext.ExercisesInBlockWarmUp.AddRange(entityBlockWarmUpList
-                .GetExercisesList());
 
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
 

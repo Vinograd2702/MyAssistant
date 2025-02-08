@@ -26,7 +26,7 @@ namespace sports_service.Core.Application.Commands.Workouts.DeleteWorkout
             var entityWorkout = await _sportServiseDbContext.Workouts
                 .FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
 
-            if (entityWorkout != null)
+            if (entityWorkout == null)
             {
                 throw new NotFoundEntityException(nameof(Workout), request.Id);
             }

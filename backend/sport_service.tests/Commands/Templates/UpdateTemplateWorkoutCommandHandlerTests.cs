@@ -3,6 +3,7 @@ using sport_service.tests.Common;
 using sports_service.Core.Application.Commands.Templates.UpdateTemplateWorkout;
 using sports_service.Core.Application.DTOs.Templates.Blocks;
 using sports_service.Core.Domain.Templates.Blocks;
+using sports_service.Core.Domain.Workouts;
 
 namespace sport_service.tests.Commands.Templates
 {
@@ -18,6 +19,9 @@ namespace sport_service.tests.Commands.Templates
             var templateId = SportContextFactory.TemplateWorkoutToUpdateId;
             var workoutTemplateBeforeUpdate = await _context.TemplateWorkouts
                .FindAsync(templateId);
+            var dependedWorkoutId = SportContextFactory.WorkoutDependetOnTemplateToUpdate;
+            var dependedWorkout = await _context.Workouts
+               .FindAsync(dependedWorkoutId);
             var exerciseTypeId = SportContextFactory.CommonExerciseTypeId;
             var templateName = "TestTemplateAfterUpdate";
             var templateDesc = "Desc for Test Template After Update";
@@ -36,6 +40,7 @@ namespace sport_service.tests.Commands.Templates
             var secondsToRest3 = 62;
             var weight3 = 63;
             var reps3 = 64;
+
 
             // сборка старых блоков из БД
             var OldTemplatesBlockCardio = new List<TemplateBlockCardio>();
@@ -357,8 +362,11 @@ namespace sport_service.tests.Commands.Templates
                 }
                 Assert.Equal(templateId, item.TemplateWorkoutId);
             }
+
+            Assert.NotNull(dependedWorkout);
+            Assert.Null(dependedWorkout.TemplateWorkoutId);
         }
 
-        // ToDo: Проверить FailedTest и добавить проверку на неудаление тренировок
+        // ToDo: Проверить FailedTest
     }
 }

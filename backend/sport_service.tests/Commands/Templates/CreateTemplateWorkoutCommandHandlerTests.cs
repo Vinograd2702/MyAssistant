@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using sport_service.tests.Common;
+﻿using sport_service.tests.Common;
 using sports_service.Core.Application.Commands.Templates.CreateTemplateWorkout;
 using sports_service.Core.Application.DTOs.Templates.Blocks;
 

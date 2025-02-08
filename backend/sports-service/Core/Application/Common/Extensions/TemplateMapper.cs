@@ -200,7 +200,8 @@ namespace sports_service.Core.Application.Common.Extensions
                 ParametrName = templateBlock.ParametrName,
                 PlannedSecondsOfDuration = templateBlock.SecondsOfDuration,
                 SecondsToRest = templateBlock.SecondsToRest,
-                Workout = workout
+                Workout = workout,
+                NumberInWorkout = templateBlock.NumberInTemplate
             };
         }
 
@@ -221,7 +222,8 @@ namespace sports_service.Core.Application.Common.Extensions
                 ExerciseTypeId = templateBlock.ExerciseTypeId,
                 NumberOfSets = templateBlock.NumberOfSets,
                 SecondsToRest = templateBlock.SecondsToRest,
-                Workout = workout
+                Workout = workout,
+                NumberInWorkout = templateBlock.NumberInTemplate
             };
 
             foreach (var templateSet in templateBlock.Sets)
@@ -256,7 +258,8 @@ namespace sports_service.Core.Application.Common.Extensions
                 UserId = workout.UserId,
                 NumberOfCircles = templateBlock.NumberOfCircles,
                 SecondsToRest = templateBlock.SecondsToRest,
-                Workout = workout
+                Workout = workout,
+                NumberInWorkout = templateBlock.NumberInTemplate
             };
 
             foreach (var templateExercise in templateBlock.Exercises)
@@ -290,7 +293,8 @@ namespace sports_service.Core.Application.Common.Extensions
             var entity = new BlockWarmUp
             {
                 UserId = workout.UserId,
-                Workout = workout
+                Workout = workout,
+                NumberInWorkout = templateBlock.NumberInTemplate
             };
 
             foreach (var templateExercise in templateBlock.Exercises)

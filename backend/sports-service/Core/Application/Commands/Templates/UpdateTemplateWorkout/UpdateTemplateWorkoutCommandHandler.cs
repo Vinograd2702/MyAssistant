@@ -81,6 +81,13 @@ namespace sports_service.Core.Application.Commands.Templates.UpdateTemplateWorko
 
             _sportServiseDbContext.TemplatesBlockWarmUp.AddRange(entityTemplateBlockWarmUpList);
 
+            var dependedWorkouts = await _sportServiseDbContext.Workouts.Where(w => w.TemplateWorkoutId == request.Id).ToListAsync();
+
+            foreach (var workout in dependedWorkouts)
+            {
+                workout.TemplateWorkoutId = null;
+            }
+
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
         }
     }

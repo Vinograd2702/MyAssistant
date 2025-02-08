@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using sports_service.Core.Domain.Exercises;
 using sports_service.Core.Domain.Templates;
 using sports_service.Core.Domain.Templates.Blocks;
+using sports_service.Core.Domain.Workouts;
+using sports_service.Core.Domain.Workouts.Blocks;
 using sports_service.Infrastructure.Persistence;
-using System.Security.Cryptography;
 
 namespace sport_service.tests.Common
 {
@@ -17,6 +18,17 @@ namespace sport_service.tests.Common
 
         public static Guid TemplateWorkoutToDeleteId = Guid.Parse("BB628967-2CB6-4709-A01D-785A7838CE6C");
         public static Guid TemplateWorkoutToUpdateId = Guid.Parse("EE66D26C-086A-4948-B843-DCC533F76CDE");
+
+        public static Guid WorkoutDependetOnTemplateToDelete = Guid.Parse("1FD6A321-9C83-45CA-B334-72330714F0F3");
+        public static Guid WorkoutDependetOnTemplateToUpdate = Guid.Parse("DD0DFCCB-D899-45E4-997E-EF274141F132");
+
+        // For Workouts
+        public static Guid CommonTemplateWorkoutId = Guid.Parse("A55CABF9-05F2-4B37-AF54-614BE57B0058");
+
+        public static Guid Workout1ToDeleteId = Guid.Parse("7FCD4174-7615-403E-BB52-2529434EA2DC");
+        public static Guid Workout2ToDeleteId = Guid.Parse("8CDDA162-EB78-4BA4-B657-B58499E1BA5F");
+        public static Guid Workout1ToUpdateId = Guid.Parse("DA439ACB-BA81-491B-A662-9FF6E653B284");
+        public static Guid Workout2ToUpdateId = Guid.Parse("61FEBDDA-F9F7-4D79-AB59-1FD7DABA0399");
 
         // For Exercise Type and Command test
         public static Guid ParentGroupId = Guid.Parse("6E6B69F5-3CD6-4E07-B690-653F939BB473");
@@ -237,6 +249,10 @@ namespace sport_service.tests.Common
             var TBSpToUpdateId = Guid.NewGuid();
             var TBWToDeleteId = Guid.NewGuid();
             var TBWToUpdateId = Guid.NewGuid();
+            
+            var TBStToCommonId = Guid.NewGuid();
+            var TBSpToCommonId = Guid.NewGuid();
+            var TBWToCommonId = Guid.NewGuid();
 
             var testArrayOfTemplateWorkout = new TemplateWorkout[]
             {
@@ -414,12 +430,469 @@ namespace sport_service.tests.Common
                             TemplateWorkoutId = TemplateWorkoutToUpdateId
                         }
                     }
+                },
+            
+                // Для создания и обновления тренировок
+                new TemplateWorkout
+                {
+                    Id= CommonTemplateWorkoutId,
+                    UserId = OriginalTestUserId,
+                    Name = "Common Workout Template",
+                    Description = "Common Workout Template",
+                    TemplatesBlockCardio =
+                    {
+                        new TemplateBlockCardio
+                        {
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 0,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            ParametrValue = 11,
+                            ParametrName = "Name",
+                            SecondsOfDuration = 12,
+                            SecondsToRest = 13,
+                            TemplateWorkoutId = CommonTemplateWorkoutId
+                        }
+                    },
+                    TemplatesBlockStrenght =
+                    {
+                        new TemplateBlockStrenght
+                        {
+                            Id = TBStToCommonId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 1,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInTemplateBlockStrength
+                                {
+                                    TemplateBlockStrenghtId = TBStToCommonId,
+                                    SetNumber = 0,
+                                    Weight = 31,
+                                    Reps = 31
+                                }
+                            },
+                            SecondsToRest = 22,
+                            TemplateWorkoutId = CommonTemplateWorkoutId
+                        }
+                    },
+                    TemplatesBlockSplit =
+                    {
+                        new TemplateBlockSplit
+                        {
+                            Id = TBSpToCommonId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 2,
+                            NumberOfCircles = 2,
+                            Exercises =
+                            {
+                                new ExerciseInTemplateBlockSplit
+                                {
+                                    TemplateBlockSplitId = TBSpToCommonId,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    Weight = 51,
+                                    Reps = 52
+                                }
+                            },
+                            SecondsToRest = 41,
+                            TemplateWorkoutId = CommonTemplateWorkoutId
+                        }
+                    },
+                    TemplatesBlockWarmUp =
+                    {
+                        new TemplateBlockWarmUp
+                        {
+                            Id = TBWToCommonId,
+                            UserId = OriginalTestUserId,
+                            NumberInTemplate = 3,
+                            Exercises =
+                            {
+                                new ExerciseInTemplateBlockWarmUp
+                                {
+                                    TemplateBlockWarmUpId = TBWToCommonId,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            TemplateWorkoutId = CommonTemplateWorkoutId
+                        }
+                    }
+                }
+
+            };
+
+            var BStToDelete1Id = Guid.NewGuid();
+            var BSpToDelete1Id = Guid.NewGuid();
+            var BWToDelete1Id = Guid.NewGuid();
+
+            var BStToDelete2Id = Guid.NewGuid();
+            var BSpToDelete2Id = Guid.NewGuid();
+            var BWToDelete2Id = Guid.NewGuid();
+
+            var BStToUpdate1Id = Guid.NewGuid();
+            var BSpToUpdate1Id = Guid.NewGuid();
+            var BWToUpdate1Id = Guid.NewGuid();
+
+            var BStToUpdate2Id = Guid.NewGuid();
+            var BSpToUpdate2Id = Guid.NewGuid();
+            var BWToUpdate2Id = Guid.NewGuid();
+
+            var testArrayOfWorkout = new Workout[]
+            {
+                // Для проверки неудаления вместе с шаблоном
+                new Workout
+                {
+                    Id = WorkoutDependetOnTemplateToDelete,
+                    UserId = OriginalTestUserId,
+                    TemplateWorkoutId = TemplateWorkoutToDeleteId,
+                    Note = "WorkoutDependetOnTemplateToDelete",
+                    DateOfWorkout = DateTime.UtcNow
+                },
+                new Workout
+                {
+                    Id = WorkoutDependetOnTemplateToUpdate,
+                    UserId = OriginalTestUserId,
+                    TemplateWorkoutId = TemplateWorkoutToUpdateId,
+                    Note = "WorkoutDependetOnTemplateToUpdate",
+                    DateOfWorkout = DateTime.UtcNow
+                },
+                // Для проверки удаления 
+                new Workout
+                {
+                    Id = Workout1ToDeleteId,
+                    UserId = OriginalTestUserId,
+                    TemplateWorkoutId = TemplateWorkoutToDeleteId,
+                    Note = "Workout1ToDelete",
+                    DateOfWorkout = DateTime.UtcNow,
+                    BlocksCardio =
+                    {
+                        new BlockCardio
+                        {
+                            Id = Guid.NewGuid(),
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            WorkoutId = Workout1ToDeleteId,
+                            NumberInWorkout = 0
+                        }
+                    },
+                    BlocksStrenght =
+                    {
+                        new BlockStrenght
+                        {
+                            Id = BStToDelete1Id,
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInBlockStrength
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockStrenghtId = BStToDelete1Id
+                                }
+                            },
+                            WorkoutId = Workout1ToDeleteId,
+                            NumberInWorkout = 1
+                        }
+                    },
+                    BlocksSplit =
+                    {
+                        new BlockSplit
+                        {
+                            Id = BSpToDelete1Id,
+                            UserId = OriginalTestUserId,
+                            NumberOfCircles = 1,
+                            ExercisesInSplit =
+                            {
+                                new ExerciseInBlockSplit
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockSplitId = BSpToDelete1Id,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    PlannedWeight = 10,
+                                    PlannedReps = 10,
+                                }
+                            },
+                            WorkoutId = Workout1ToDeleteId,
+                            NumberInWorkout = 2
+                        }
+                    },
+                    BlocksWarmUp =
+                    {
+                        new BlockWarmUp
+                        {
+                            Id = BWToDelete1Id,
+                            UserId = OriginalTestUserId,
+                            ExercisesInWarmUp =
+                            {
+                                new ExerciseInBlockWarmUp
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockWarmUpId = BWToDelete1Id,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            WorkoutId = Workout1ToDeleteId,
+                            NumberInWorkout = 3
+                        }
+                    }
+                },
+                new Workout
+                {
+                    Id = Workout2ToDeleteId,
+                    UserId = OriginalTestUserId,
+                    TemplateWorkoutId = TemplateWorkoutToUpdateId,
+                    Note = "Workout2ToDelete",
+                    DateOfWorkout = DateTime.UtcNow,
+                    BlocksCardio =
+                    {
+                        new BlockCardio
+                        {
+                            Id = Guid.NewGuid(),
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            WorkoutId = Workout2ToDeleteId,
+                            NumberInWorkout = 0
+                        }
+                    },
+                    BlocksStrenght =
+                    {
+                        new BlockStrenght
+                        {
+                            Id = BStToDelete2Id,
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInBlockStrength
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockStrenghtId = BStToDelete2Id
+                                }
+                            },
+                            WorkoutId = Workout2ToDeleteId,
+                            NumberInWorkout = 1
+                        }
+                    },
+                    BlocksSplit =
+                    {
+                        new BlockSplit
+                        {
+                            Id = BSpToDelete2Id,
+                            UserId = OriginalTestUserId,
+                            NumberOfCircles = 1,
+                            ExercisesInSplit =
+                            {
+                                new ExerciseInBlockSplit
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockSplitId = BSpToDelete2Id,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    PlannedWeight = 10,
+                                    PlannedReps = 10,
+                                }
+                            },
+                            WorkoutId = Workout2ToDeleteId,
+                            NumberInWorkout = 2
+                        }
+                    },
+                    BlocksWarmUp =
+                    {
+                        new BlockWarmUp
+                        {
+                            Id = BWToDelete2Id,
+                            UserId = OriginalTestUserId,
+                            ExercisesInWarmUp =
+                            {
+                                new ExerciseInBlockWarmUp
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockWarmUpId = BWToDelete2Id,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            WorkoutId = Workout2ToDeleteId,
+                            NumberInWorkout = 3
+                        }
+                    }
+                },
+                // Для проверки обновления
+                new Workout
+                {
+                    Id = Workout1ToUpdateId,
+                    UserId = OriginalTestUserId,
+                    TemplateWorkoutId = TemplateWorkoutToDeleteId,
+                    Note = "Workout1ToUpdate",
+                    DateOfWorkout = DateTime.UtcNow,
+                     BlocksCardio =
+                    {
+                        new BlockCardio
+                        {
+                            Id = Guid.NewGuid(),
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            WorkoutId = Workout1ToUpdateId,
+                            NumberInWorkout = 0
+                        }
+                    },
+                    BlocksStrenght =
+                    {
+                        new BlockStrenght
+                        {
+                            Id = BStToUpdate1Id,
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInBlockStrength
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockStrenghtId = BStToUpdate1Id
+                                }
+                            },
+                            WorkoutId = Workout1ToUpdateId,
+                            NumberInWorkout = 1
+                        }
+                    },
+                    BlocksSplit =
+                    {
+                        new BlockSplit
+                        {
+                            Id = BSpToUpdate1Id,
+                            UserId = OriginalTestUserId,
+                            NumberOfCircles = 1,
+                            ExercisesInSplit =
+                            {
+                                new ExerciseInBlockSplit
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockSplitId = BSpToUpdate1Id,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    PlannedWeight = 10,
+                                    PlannedReps = 10,
+                                }
+                            },
+                            WorkoutId = Workout1ToUpdateId,
+                            NumberInWorkout = 2
+                        }
+                    },
+                    BlocksWarmUp =
+                    {
+                        new BlockWarmUp
+                        {
+                            Id = BWToUpdate1Id,
+                            UserId = OriginalTestUserId,
+                            ExercisesInWarmUp =
+                            {
+                                new ExerciseInBlockWarmUp
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockWarmUpId = BWToUpdate1Id,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            WorkoutId = Workout1ToUpdateId,
+                            NumberInWorkout = 3
+                        }
+                    }
+                },
+                new Workout
+                {
+                    Id = Workout2ToUpdateId,
+                    UserId = OriginalTestUserId,
+                    TemplateWorkoutId = TemplateWorkoutToUpdateId,
+                    Note = "Workout2ToUpdate",
+                    DateOfWorkout = DateTime.UtcNow,
+                     BlocksCardio =
+                    {
+                        new BlockCardio
+                        {
+                            Id = Guid.NewGuid(),
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            WorkoutId = Workout2ToUpdateId,
+                            NumberInWorkout = 0
+                        }
+                    },
+                    BlocksStrenght =
+                    {
+                        new BlockStrenght
+                        {
+                            Id = BStToUpdate2Id, 
+                            UserId = OriginalTestUserId,
+                            ExerciseTypeId = CommonExerciseTypeId,
+                            NumberOfSets = 1,
+                            Sets =
+                            {
+                                new SetInBlockStrength
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockStrenghtId = BStToUpdate2Id
+                                }
+                            },
+                            WorkoutId = Workout2ToUpdateId,
+                            NumberInWorkout = 1
+                        }
+                    },
+                    BlocksSplit =
+                    {
+                        new BlockSplit
+                        {
+                            Id = BSpToUpdate2Id,
+                            UserId = OriginalTestUserId,
+                            NumberOfCircles = 1,
+                            ExercisesInSplit =
+                            {
+                                new ExerciseInBlockSplit
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockSplitId = BSpToUpdate2Id,
+                                    NumberInSplit = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                    PlannedWeight = 10,
+                                    PlannedReps = 10,
+                                }
+                            },
+                            WorkoutId = Workout2ToUpdateId,
+                            NumberInWorkout = 2
+                        }
+                    },
+                    BlocksWarmUp =
+                    {
+                        new BlockWarmUp
+                        {
+                            Id = BWToUpdate2Id,
+                            UserId = OriginalTestUserId,
+                            ExercisesInWarmUp =
+                            {
+                                new ExerciseInBlockWarmUp
+                                {
+                                    Id = Guid.NewGuid(),
+                                    BlockWarmUpId = BWToUpdate2Id,
+                                    NumberInWarmUp = 0,
+                                    ExerciseTypeId = CommonExerciseTypeId,
+                                }
+                            },
+                            WorkoutId = Workout2ToUpdateId,
+                            NumberInWorkout = 3
+                        }
+                    }
                 }
             };
 
             context.ExerciseGroups.AddRange(testArrayOfExerciseGroup);
             context.ExerciseTypes.AddRange(testArrayOfExerciseType);
             context.TemplateWorkouts.AddRange(testArrayOfTemplateWorkout);
+            context.Workouts.AddRange(testArrayOfWorkout);
 
             context.SaveChangesAsync();
             return context;

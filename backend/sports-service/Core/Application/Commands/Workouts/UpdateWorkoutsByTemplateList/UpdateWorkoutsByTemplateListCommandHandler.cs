@@ -55,6 +55,9 @@ namespace sports_service.Core.Application.Commands.Workouts.UpdateWorkoutsByTemp
 
                 if (entityWorkout != null)
                 {
+                    entityWorkout.TemplateWorkout = templateWorkout;
+                    entityWorkout.TemplateWorkoutName = templateWorkout.Name;
+
                     updateEntityWorkout.Add(entityWorkout);
                     _sportServiseDbContext.BlocksCardio.RemoveRange(entityWorkout.BlocksCardio);
                     _sportServiseDbContext.BlocksStrenght.RemoveRange(entityWorkout.BlocksStrenght);
@@ -71,24 +74,16 @@ namespace sports_service.Core.Application.Commands.Workouts.UpdateWorkoutsByTemp
 
                     _sportServiseDbContext.BlocksStrenght.AddRange(entityBlockStrenghtList);
 
-                    _sportServiseDbContext.SetsInBlockStrength.AddRange(entityBlockStrenghtList
-                        .GetSetsList());
-
                     var entityBlockSplitList = templateWorkout.TemplatesBlockSplit
                         .ToWorkoutBlock(entityWorkout);
 
                     _sportServiseDbContext.BlocksSplit.AddRange(entityBlockSplitList);
-
-                    _sportServiseDbContext.ExercisesInBlockSplit.AddRange(entityBlockSplitList
-                        .GetExercisesList());
 
                     var entityBlockWarmUpList = templateWorkout.TemplatesBlockWarmUp
                         .ToWorkoutBlock(entityWorkout);
 
                     _sportServiseDbContext.BlocksWarmUp.AddRange(entityBlockWarmUpList);
 
-                    _sportServiseDbContext.ExercisesInBlockWarmUp.AddRange(entityBlockWarmUpList
-                        .GetExercisesList());
                 }
             }
 

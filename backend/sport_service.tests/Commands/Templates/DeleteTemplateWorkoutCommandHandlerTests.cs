@@ -17,6 +17,9 @@ namespace sport_service.tests.Commands.Templates
             var templateId = SportContextFactory.TemplateWorkoutToDeleteId;
             var entityBeforeDelite = await _context.TemplateWorkouts
                 .FindAsync(templateId);
+            var dependedWorkoutId = SportContextFactory.WorkoutDependetOnTemplateToDelete;
+            var dependedWorkout = await _context.Workouts
+               .FindAsync(dependedWorkoutId);
 
             // Act
             await handler.Handle(
@@ -101,7 +104,10 @@ namespace sport_service.tests.Commands.Templates
 
             Assert.Empty(TemplatesBlockWarmUp);
 
-            // ToDo: проверить не удаляются ли тренировки, добавить Failed Tests
+            Assert.NotNull(dependedWorkout);
+            Assert.Null(dependedWorkout.TemplateWorkoutId);
+
+            // ToDo: добавить Failed Tests
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using sports_service.Core.Application.Commands.Workouts.DeleteWorkout;
 using sports_service.Core.Application.Interfaces.Repositories;
 using sports_service.Core.Domain.Workouts;
 
@@ -41,6 +39,8 @@ namespace sports_service.Core.Application.Commands.Workouts.DeleteWorkoutsList
 
             _sportServiseDbContext.Workouts.RemoveRange(deletedEntitysList);
 
+            await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
+            
             return deletedEntitysList.Count;
         }
     }

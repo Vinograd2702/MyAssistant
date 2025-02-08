@@ -7,8 +7,8 @@
         public BlockStrenght? BlockStrengh { get; set; }
         public int SetNumber { get; set; } // Номер подхода в упражнении
         public int PlannedWeight { get; set; } // Заданный вес
-        public int AchievedWeight { get; set; } // Достугнутый вес
+        public int? AchievedWeight { get; set; } // Достугнутый вес
         public int PlannedReps { get; set; }    // Заданные повторения
-        public int AchievedReps { get; set; }    // Достигнутые повторения
+        public int? AchievedReps { get; set; }    // Достигнутые повторения
     }
 }

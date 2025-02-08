@@ -10,5 +10,6 @@
         public int? SecondsToRest { get; set; }     // Время отдыха в секундах
         public Guid WorkoutId { get; set; }
         public Workout? Workout { get; set; }
+        public int NumberInWorkout { get; set; }
     }
 }
