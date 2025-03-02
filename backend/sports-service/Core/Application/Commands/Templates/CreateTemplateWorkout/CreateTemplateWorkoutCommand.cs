@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using sports_service.Core.Application.Common.Mappings;
 using sports_service.Core.Application.DTOs.Templates.Blocks;
-using sports_service.Presentation.Contract;
 
 namespace sports_service.Core.Application.Commands.Templates.CreateTemplateWorkout
 {
-    public class CreateTemplateWorkoutCommand : IRequest<Guid>, IMapWith<CreateTemplateWorkoutRequest>
+    public class CreateTemplateWorkoutCommand : IRequest<Guid>
     {
         public Guid UserId { get; set; }
         public string Name { get; set; } = "";

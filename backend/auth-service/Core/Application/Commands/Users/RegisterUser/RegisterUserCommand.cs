@@ -1,5 +1,4 @@
-﻿using auth_servise.Core.Domain;
-using MediatR;
+﻿using MediatR;
 
 namespace auth_servise.Core.Application.Commands.Users.RegisterUser
 {

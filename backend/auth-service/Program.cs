@@ -1,10 +1,10 @@
 using auth_servise.Core.Application.Common.Mappings;
 using auth_servise.Core.Application.Interfaces.Auth;
-using auth_servise.Core.Application.Interfaces.Notificate;
+using auth_servise.Core.Application.Interfaces.Notification;
 using auth_servise.Core.Application.Interfaces.RabbitMq;
 using auth_servise.Core.Application.Interfaces.Repositories;
 using auth_servise.Infrastructure.Jwt;
-using auth_servise.Infrastructure.Notificate;
+using auth_servise.Infrastructure.Notification;
 using auth_servise.Infrastructure.PasswordHasher;
 using auth_servise.Infrastructure.Persistence;
 using auth_servise.Infrastructure.RabbitMq;
@@ -99,7 +99,9 @@ services.AddTransient<IHasher, Hasher>();
 services.AddTransient<IJwtProvider, JwtProvider>();
 
 // Notificate
-services.AddTransient<ICheckEmailNotificate, EmailNotificate>();
+services.AddTransient<ISendEmailInfoToNotificationService, EmailNotificationServiceConnector>();
+services.AddTransient<IManageNotificationUserSettings, EmailNotificationServiceConnector>();
+services.AddTransient<ICheckEmailNotification, EmailNotificationServiceConnector>();
 
 services.AddCors(options =>
 {

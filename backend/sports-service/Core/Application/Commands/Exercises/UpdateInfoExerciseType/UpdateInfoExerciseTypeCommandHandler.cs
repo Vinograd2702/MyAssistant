@@ -7,7 +7,7 @@ using sports_service.Core.Domain.Exercises;
 namespace sports_service.Core.Application.Commands.Exercises.UpdateInfoExerciseType
 {
     public class UpdateInfoExerciseTypeCommandHandler 
-        : IRequestHandler<UpdateNameExercisesGroupCommand>
+        : IRequestHandler<UpdateInfoExercisesTypeCommand>
     {
         private readonly ISportServiseDbContext _sportServiseDbContext;
 
@@ -16,7 +16,7 @@ namespace sports_service.Core.Application.Commands.Exercises.UpdateInfoExerciseT
             _sportServiseDbContext = sportServiseDbContext;
         }
 
-        public async Task Handle(UpdateNameExercisesGroupCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateInfoExercisesTypeCommand request, CancellationToken cancellationToken)
         {
             if (request.UserId == Guid.Empty)
             {

@@ -1,4 +1,5 @@
 ﻿using auth_servise.Core.Application.Common.Exceptions;
+using auth_servise.Core.Application.Interfaces.Notification;
 using auth_servise.Core.Application.Interfaces.Repositories;
 using auth_servise.Core.Domain;
 using MediatR;
@@ -10,9 +11,12 @@ namespace auth_servise.Core.Application.Commands.Users.RegisterUser
         : IRequestHandler<RegisterUserCommand, Guid>
     {
         private readonly IAuthServiseDbContext _authServiseDbContext;
-        public RegisterUserCommandHandler(IAuthServiseDbContext authServiseDbContext)
+        private readonly ISendEmailInfoToNotificationService _sendEmailInfoToNotificationService;
+        public RegisterUserCommandHandler(IAuthServiseDbContext authServiseDbContext,
+            ISendEmailInfoToNotificationService sendEmailInfoToNotificationService)
         {
             _authServiseDbContext = authServiseDbContext;
+            _sendEmailInfoToNotificationService = sendEmailInfoToNotificationService;
         }
 
         public async Task<Guid> Handle(RegisterUserCommand request,
@@ -40,6 +44,7 @@ namespace auth_servise.Core.Application.Commands.Users.RegisterUser
             _authServiseDbContext.RegistrationAttempts.Remove(registrationAttempt);
             _authServiseDbContext.Users.Add(user);
             await _authServiseDbContext.SaveChangesAsync(cancellationToken);
+            await _sendEmailInfoToNotificationService.SendEmailInfoToNotificationService(user.Id, user.EmailAddress!);
 
             return user.Id;
         }

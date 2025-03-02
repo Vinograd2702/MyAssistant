@@ -2,6 +2,7 @@
 using sports_service.Core.Domain.Exercises;
 using sports_service.Core.Domain.Templates;
 using sports_service.Core.Domain.Templates.Blocks;
+using sports_service.Core.Domain.WorkoutNotificationSettings;
 using sports_service.Core.Domain.Workouts;
 using sports_service.Core.Domain.Workouts.Blocks;
 
@@ -34,6 +35,9 @@ namespace sports_service.Core.Application.Interfaces.Repositories
         DbSet<SetInBlockStrength> SetsInBlockStrength { get; set; }
         DbSet<ExerciseInBlockSplit> ExercisesInBlockSplit { get; set; }
         DbSet<ExerciseInBlockWarmUp> ExercisesInBlockWarmUp { get; set; }
+
+        //WorkoutNotificationSettings
+        DbSet<WorkoutNotificationSetting> WorkoutNotificationSettings { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

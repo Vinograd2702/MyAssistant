@@ -1,10 +1,10 @@
-﻿using auth_servise.Core.Application.Interfaces.Notificate;
+﻿using auth_servise.Core.Application.Interfaces.Notification;
 
 namespace auth_servise.tests.Common
 {
-    public class DummyEmailNotificate : ICheckEmailNotificate
+    public class DummyEmailNotificate : ICheckEmailNotification
     {
-        Task ICheckEmailNotificate.SendCheckEmailNotificate(string EmailToSend, string urlToComfirmEmail, string urlToBlockEmail)
+        Task ICheckEmailNotification.SendCheckEmailNotification(string EmailToSend, string urlToComfirmEmail, string urlToBlockEmail)
         {
             return Task.CompletedTask;
         }

@@ -1,12 +1,11 @@
 ﻿using auth_servise.Core.Application.Common.Exceptions;
 using auth_servise.Core.Application.Interfaces.Auth;
-using auth_servise.Core.Application.Interfaces.Notificate;
+using auth_servise.Core.Application.Interfaces.Notification;
 using auth_servise.Core.Application.Interfaces.Repositories;
 using auth_servise.Core.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System.Text;
 using static auth_servise.Presentation.HostedServices.ServicesOptions;
 
 namespace auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegistrationAttempt
@@ -16,12 +15,12 @@ namespace auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegi
     {
         private readonly IAuthServiseDbContext _authServiseDbContext;
         private readonly IHasher _passwordHasher;
-        private readonly ICheckEmailNotificate _checkEmailNotificate;
+        private readonly ICheckEmailNotification _checkEmailNotificate;
         private readonly Urls _options;
 
         public CreateRegistrationAttemptCommandHandler(IAuthServiseDbContext authServiseDbContext,
             IHasher passwordHasher,
-            ICheckEmailNotificate checkEmailNotificate,
+            ICheckEmailNotification checkEmailNotificate,
             IOptions<Urls> options)
         {
             _authServiseDbContext = authServiseDbContext;
@@ -89,7 +88,7 @@ namespace auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegi
 
             if (blockEmail != null)
             {
-                throw new EmailIsBlockedException(blockEmail.EmailAddress);
+                throw new EmailIsBlockedException(blockEmail.EmailAddress!);
             }
 
             var registrationAttempt = new RegistrationAttempt()
@@ -103,7 +102,7 @@ namespace auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegi
 
             var urlToCoufirmCurrentEmail = _options.UrlToConfirmEmail + registrationAttempt.HashedEmail;
             var urlToBlockCurrentEmail = _options.UrlToBlockEmail + registrationAttempt.HashedEmail;
-            await _checkEmailNotificate.SendCheckEmailNotificate(registrationAttempt.EmailAddress,
+            await _checkEmailNotificate.SendCheckEmailNotification(registrationAttempt.EmailAddress,
                 urlToCoufirmCurrentEmail, urlToBlockCurrentEmail);
 
             await _authServiseDbContext.RegistrationAttempts.AddAsync(registrationAttempt, cancellationToken);

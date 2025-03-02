@@ -9,7 +9,7 @@ namespace auth_servise.tests.Queries.RegistrationAttempts
     public class GetRegistrationAttempsListQueryHandlerTests : TestQueryBase
     {
         [Fact]
-        public async Task GetRegistrationAttempsListQueryHandler_Succsess()
+        public async Task GetRegistrationAttempsListQueryHandler_Success()
         {
             // Arrange
             var handler = new GetRegistrationAttemptsListQueryHandler(Context);

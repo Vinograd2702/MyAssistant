@@ -9,7 +9,7 @@ namespace auth_servise.tests.Queries.BlockedEmails
     public class GetBlockedEmailsListQueryHandlerTests : TestQueryBase
     {
         [Fact]
-        public async Task GetBlockedEmailsListQueryHandler_Succsess()
+        public async Task GetBlockedEmailsListQueryHandler_Success()
         {
             // Arrange
             var handler = new GetBlockedEmailsListQueryHandler(Context);

@@ -1,7 +1,10 @@
 ﻿using auth_servise.Core.Application.Commands.Users.DeleteUser;
 using auth_servise.Core.Application.Commands.Users.RegisterUser;
+using auth_servise.Core.Application.Commands.Users.UpdateNotificationUserSettings;
 using auth_servise.Core.Application.Commands.Users.UpdateUserInfo;
+using auth_servise.Core.Application.Common.CommonObjects;
 using auth_servise.Core.Application.Common.Exceptions;
+using auth_servise.Core.Application.Queries.Users.GetNotificationSettingsForUser;
 using auth_servise.Core.Application.Queries.Users.GetUserAuthTokenByEmailAndPassword;
 using auth_servise.Core.Application.Queries.Users.GetUserInfoById;
 using auth_servise.Core.Application.Queries.Users.GetUsersList;
@@ -235,6 +238,58 @@ namespace auth_servise.Presentation.Controllers
             }
 
             return Ok();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> UpdateNotificationUserSettings(
+            [FromBody] UpdateNotificationUserSettingsRequest request)
+        {
+            var command = new UpdateNotificationUserSettingsCommand
+            {
+                Id = request.Id,
+                ClientUserId = UserId,
+                IsUseEmail = request.IsUseEmail,
+                IsUsePush = request.IsUsePush
+            };
+
+            try
+            {
+                await Mediator.Send(command);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserNotificationSettings>> GetNotificationSettingsForMyUser()
+        {
+            var query = new GetNotificationSettingsForUserCommand
+            {
+                Id = UserId
+            };
+
+            UserNotificationSettings responce;
+
+            try
+            {
+                responce = await Mediator.Send(query);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(responce);
         }
     }
 }

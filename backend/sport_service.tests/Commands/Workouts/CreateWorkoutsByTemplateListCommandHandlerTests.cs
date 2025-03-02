@@ -15,19 +15,19 @@ namespace sport_service.tests.Commands.Workouts
             var handler = new CreateWorkoutsByTemplateListCommandHandler(_context);
             var userId = SportContextFactory.OriginalTestUserId;
             var templateWorkoutId = SportContextFactory.CommonTemplateWorkoutId;
-            var workoutDTOsList = new List<WorkoutDTO>()
+            var workoutDTOsList = new List<WorkoutToCreateListDTO>()
             {
-                new WorkoutDTO
+                new WorkoutToCreateListDTO
                 {
                     DateOfWorkout = new DateTime(2025, 2, 1, 18, 30, 0),
                     Note = "First Train By Template at 01.02.2025 18:30:00"
                 },
-                new WorkoutDTO
+                new WorkoutToCreateListDTO
                 {
                     DateOfWorkout = new DateTime(2025, 2, 2, 15, 45, 0),
                     Note = "First Train By Template at 01.02.2025 15:45:00"
                 },
-                new WorkoutDTO
+                new WorkoutToCreateListDTO
                 {
                     DateOfWorkout = new DateTime(2025, 2, 3, 7, 00, 0),
                     Note = "First Train By Template at 01.03.2025 7:00:00"

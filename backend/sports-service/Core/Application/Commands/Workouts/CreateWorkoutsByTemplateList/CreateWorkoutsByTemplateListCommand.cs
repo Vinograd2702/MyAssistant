@@ -7,7 +7,7 @@ namespace sports_service.Core.Application.Commands.Workouts.CreateWorkoutsByTemp
     {
         public Guid UserId { get; set; }
         public Guid TemplateWorkoutId { get; set; }
-        public List<WorkoutDTO> WorkoutDTOs { get; set; }
-            = new List<WorkoutDTO>();
+        public List<WorkoutToCreateListDTO> WorkoutDTOs { get; set; }
+            = new List<WorkoutToCreateListDTO>();
     }
 }

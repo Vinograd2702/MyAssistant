@@ -8,6 +8,10 @@ using sports_service.Core.Domain.Exercises;
 using sports_service.Infrastructure.Persistence.EntityTypeConfigurations.Exercises;
 using sports_service.Infrastructure.Persistence.EntityTypeConfigurations.Templates;
 using sports_service.Infrastructure.Persistence.EntityTypeConfigurations.Templates.Blocks;
+using sports_service.Infrastructure.Persistence.EntityTypeConfigurations.Workouts;
+using sports_service.Infrastructure.Persistence.EntityTypeConfigurations.Workouts.Blocks;
+using sports_service.Core.Domain.WorkoutNotificationSettings;
+using sports_service.Infrastructure.Persistence.EntityTypeConfigurations.WorkoutNotificationSettings;
 
 namespace sports_service.Infrastructure.Persistence
 {
@@ -38,6 +42,10 @@ namespace sports_service.Infrastructure.Persistence
         public DbSet<SetInBlockStrength> SetsInBlockStrength { get; set; }
         public DbSet<ExerciseInBlockSplit> ExercisesInBlockSplit { get; set; }
         public DbSet<ExerciseInBlockWarmUp> ExercisesInBlockWarmUp { get; set; }
+
+        //WorkoutNotificationSettings
+        public DbSet<WorkoutNotificationSetting> WorkoutNotificationSettings { get; set; }
+
         public SportServiseDbContext(DbContextOptions<SportServiseDbContext> options)
             : base(options) { }
 
@@ -59,8 +67,18 @@ namespace sports_service.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new ExerciseInTemplateBlockWarmUpConfiguration());
 
             // Workouts
+            modelBuilder.ApplyConfiguration(new WorkoutConfiguration());
             // Workouts/Blocks
+            modelBuilder.ApplyConfiguration(new BlockCardioConfiguration());
+            modelBuilder.ApplyConfiguration(new BlockSplitConfiguration());
+            modelBuilder.ApplyConfiguration(new BlockStrenghtConfiguration());
+            modelBuilder.ApplyConfiguration(new BlockWarmUpConfiguration());
+            modelBuilder.ApplyConfiguration(new SetInBlockStrengthConfiguration());
+            modelBuilder.ApplyConfiguration(new ExerciseInBlockSplitConfiguration());
+            modelBuilder.ApplyConfiguration(new ExerciseInBlockWarmUpConfiguration());
 
+            //WorkoutNotificationSettings
+            modelBuilder.ApplyConfiguration(new WorkoutNotificationSettingConfiguration());
         }
     }
 }

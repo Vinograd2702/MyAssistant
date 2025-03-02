@@ -13,8 +13,6 @@ namespace sports_service.Infrastructure.Persistence.EntityTypeConfigurations.Tem
             builder.HasIndex(e => e.Id).IsUnique();
             builder.Property(e => e.TemplateBlockSplitId).IsRequired();
             builder.Property(e => e.ExerciseTypeId).IsRequired();
-            //builder.HasOne(e => e.TemplateBlockSplit).WithMany().OnDelete(DeleteBehavior.Cascade);
-            // Возможно можно обойтись, так как указал связь с обязательным параметром
         }
     }
 }

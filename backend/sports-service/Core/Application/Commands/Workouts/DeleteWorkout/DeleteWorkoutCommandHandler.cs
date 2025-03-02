@@ -36,7 +36,6 @@ namespace sports_service.Core.Application.Commands.Workouts.DeleteWorkout
                 throw new UnauthorizedAccessException();
             }
 
-            // ! проверить каскадное удаление
             _sportServiseDbContext.Workouts.Remove(entityWorkout);
             await _sportServiseDbContext.SaveChangesAsync(cancellationToken);
         }

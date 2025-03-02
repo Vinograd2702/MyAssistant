@@ -9,7 +9,7 @@ namespace auth_servise.tests.Commands.Users
     public class DeleteUserCommandHandlerTests : TestCommandBase
     {
         [Fact]
-        public async Task DeleteUserCommandHandler_ById_Succsess()
+        public async Task DeleteUserCommandHandler_ById_Success()
         {
             // Arrange
             var handler = new DeleteUserCommandHandler(_context);

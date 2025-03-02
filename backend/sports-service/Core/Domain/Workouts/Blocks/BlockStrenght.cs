@@ -1,5 +1,4 @@
 ﻿using sports_service.Core.Domain.Exercises;
-using sports_service.Core.Domain.Templates.Blocks;
 
 namespace sports_service.Core.Domain.Workouts.Blocks
 {

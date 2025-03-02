@@ -22,7 +22,7 @@ namespace sport_service.tests.Commands.Exercises
 
             // Act
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -54,7 +54,7 @@ namespace sport_service.tests.Commands.Exercises
             // Assert
             await Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -76,7 +76,7 @@ namespace sport_service.tests.Commands.Exercises
             // Assert
             await Assert.ThrowsAsync<NotFoundEntityException>(async () =>
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -98,7 +98,7 @@ namespace sport_service.tests.Commands.Exercises
             // Assert
             await Assert.ThrowsAsync<NotFoundEntityException>(async () =>
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -120,7 +120,7 @@ namespace sport_service.tests.Commands.Exercises
             // Assert
             await Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -143,7 +143,7 @@ namespace sport_service.tests.Commands.Exercises
             // Assert
             await Assert.ThrowsAsync<ArgumentException>(async () =>
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -163,7 +163,7 @@ namespace sport_service.tests.Commands.Exercises
 
             // Act
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,
@@ -195,7 +195,7 @@ namespace sport_service.tests.Commands.Exercises
             // Assert
             await Assert.ThrowsAsync<NameEntityIsAlreadyUsedForThisUserException>(async () =>
             await handler.Handle(
-                new UpdateNameExercisesGroupCommand
+                new UpdateInfoExercisesTypeCommand
                 {
                     UserId = userId,
                     Id = typeId,

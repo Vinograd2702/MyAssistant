@@ -10,7 +10,7 @@ namespace auth_servise.tests.Commands.RegistrationAttempts
         [Theory]
         [InlineData("Admin")]
         [InlineData("HostedService")]
-        public async Task DeleteOldRegistrationAttemptCommandHandler_Succsess(string role)
+        public async Task DeleteOldRegistrationAttemptCommandHandler_Success(string role)
         {
             // Arrange
             var handler = new DeleteOldRegistrationAttemptCommandHandler(_context);

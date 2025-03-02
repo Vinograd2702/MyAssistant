@@ -8,7 +8,7 @@ namespace auth_servise.tests.Commands.RegistrationAttempts
     public class DeleteRegistrationAttemptCommandHandlerTests : TestCommandBase
     {
         [Fact]
-        public async Task DeleteRegistrationAttemptCommandHandler_ById_Succsess()
+        public async Task DeleteRegistrationAttemptCommandHandler_ById_Success()
         {
             // Arrange
             var handler = new DeleteRegistrationAttemptCommandHandler(_context);

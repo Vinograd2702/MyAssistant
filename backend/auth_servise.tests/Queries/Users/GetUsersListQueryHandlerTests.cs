@@ -10,7 +10,7 @@ namespace auth_servise.tests.Queries.Users
     public class GetUsersListQueryHandlerTests : TestQueryBase
     {
         [Fact]
-        public async Task GetUsersListQueryHandler_Succsess()
+        public async Task GetUsersListQueryHandler_Success()
         {
             // Arrange
             var handler = new GetUsersListQueryHandler(Context);

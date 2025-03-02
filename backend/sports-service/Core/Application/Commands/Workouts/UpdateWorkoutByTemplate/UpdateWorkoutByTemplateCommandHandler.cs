@@ -56,7 +56,6 @@ namespace sports_service.Core.Application.Commands.Workouts.UpdateWorkoutByTempl
             entityWorkout.TemplateWorkout = templateWorkout;
             entityWorkout.TemplateWorkoutName = templateWorkout.Name;
 
-            // Проверить каскадное удаление
             _sportServiseDbContext.BlocksCardio.RemoveRange(entityWorkout.BlocksCardio);
             _sportServiseDbContext.BlocksStrenght.RemoveRange(entityWorkout.BlocksStrenght);
             _sportServiseDbContext.BlocksSplit.RemoveRange(entityWorkout.BlocksSplit);

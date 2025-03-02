@@ -1,10 +1,8 @@
 ﻿using auth_servise.Core.Application.Interfaces.RabbitMq;
-using auth_servise.Infrastructure.Notificate;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
-using static auth_servise.Infrastructure.Notificate.EmailNotificate;
 
 namespace auth_servise.Infrastructure.RabbitMq
 {
@@ -24,7 +22,6 @@ namespace auth_servise.Infrastructure.RabbitMq
                 UserName = _options.UserName,
                 Password = _options.UserPassword 
             };
-
         }
 
         public async Task CreateConnection()
@@ -53,6 +50,11 @@ namespace auth_servise.Infrastructure.RabbitMq
         {
             var body = Encoding.UTF8.GetBytes(message);
             await _channel.BasicPublishAsync("", _options.NotificatorQueue, body, CancellationToken.None);
+        }
+
+        public async Task WaitMessage(Guid TaskId /*из какой очререди ждать параметры*/)
+        {
+
         }
     }
 }
