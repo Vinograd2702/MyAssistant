@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\Application\Interfaces\SportService\" />
+    <Folder Include="Infrastructure\UsedServices\Messages\ToSportsSportService\" />
     <Folder Include="Presentation\Models\" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace auth_servise.Core.Application.Interfaces.Notification
+﻿namespace auth_servise.Core.Application.Interfaces.NotificationService
 {
     public interface ISendEmailInfoToNotificationService
     {

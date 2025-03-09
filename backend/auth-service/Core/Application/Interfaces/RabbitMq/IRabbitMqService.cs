@@ -2,8 +2,8 @@
 {
     public interface IRabbitMqService
     {
-        public Task SendMessage(object obj);
-        public Task SendMessage(string message);
+        public Task SendMessage(object obj, string service = "all");
+        public Task SendMessage(string message, string recipientService);
         public Task CreateConnection();
     }
 }

@@ -12,5 +12,6 @@
         public string? LastName { get; set; }
         public string? Patronymic { get; set; }
         public DateTime DateOfRegistration { get; set; }
+        public UserSettings? UserSettings { get; set; }
     }
 }

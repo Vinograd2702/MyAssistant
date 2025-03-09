@@ -1,5 +1,4 @@
-﻿
-using auth_servise.Core.Application.Commands.RegistrationAttempts.DeleteOldRegistrationAttempts;
+﻿using auth_servise.Core.Application.Commands.RegistrationAttempts.DeleteOldRegistrationAttempts;
 using MediatR;
 using Microsoft.Extensions.Options;
 using static auth_servise.Presentation.HostedServices.ServicesOptions;

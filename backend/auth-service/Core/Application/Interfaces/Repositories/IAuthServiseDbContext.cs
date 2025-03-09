@@ -8,6 +8,8 @@ namespace auth_servise.Core.Application.Interfaces.Repositories
         DbSet<User> Users { get; set; }
         DbSet<RegistrationAttempt> RegistrationAttempts { get; set; }
         DbSet<BlockedEmail> BlockedEmails { get; set; }
+        DbSet<QueueTaskStatus> QueueTasksStatus { get; set; }
+        DbSet<UserSettings> UsersSettings { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

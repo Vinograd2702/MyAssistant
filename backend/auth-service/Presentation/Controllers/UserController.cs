@@ -261,20 +261,32 @@ namespace auth_servise.Presentation.Controllers
             {
                 return Unauthorized();
             }
+            catch (NotificationServiseErrorException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (TimeoutException ex)
+            {
+                return StatusCode(524, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok();
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<UserNotificationSettings>> GetNotificationSettingsForMyUser()
+        public async Task<ActionResult<UserNotificationSettingsVm>> GetNotificationSettingsForMyUser()
         {
-            var query = new GetNotificationSettingsForUserCommand
+            var query = new GetNotificationSettingsForUserQuery
             {
-                Id = UserId
+                UserId = UserId
             };
 
-            UserNotificationSettings responce;
+            UserNotificationSettingsVm responce;
 
             try
             {

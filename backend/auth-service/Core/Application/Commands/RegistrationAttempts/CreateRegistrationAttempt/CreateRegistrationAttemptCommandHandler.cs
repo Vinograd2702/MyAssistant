@@ -1,6 +1,6 @@
 ﻿using auth_servise.Core.Application.Common.Exceptions;
 using auth_servise.Core.Application.Interfaces.Auth;
-using auth_servise.Core.Application.Interfaces.Notification;
+using auth_servise.Core.Application.Interfaces.NotificationService;
 using auth_servise.Core.Application.Interfaces.Repositories;
 using auth_servise.Core.Domain;
 using MediatR;
@@ -15,12 +15,12 @@ namespace auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegi
     {
         private readonly IAuthServiseDbContext _authServiseDbContext;
         private readonly IHasher _passwordHasher;
-        private readonly ICheckEmailNotification _checkEmailNotificate;
+        private readonly ICheckEmailNotificationByRA _checkEmailNotificate;
         private readonly Urls _options;
 
         public CreateRegistrationAttemptCommandHandler(IAuthServiseDbContext authServiseDbContext,
             IHasher passwordHasher,
-            ICheckEmailNotification checkEmailNotificate,
+            ICheckEmailNotificationByRA checkEmailNotificate,
             IOptions<Urls> options)
         {
             _authServiseDbContext = authServiseDbContext;
@@ -102,6 +102,7 @@ namespace auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegi
 
             var urlToCoufirmCurrentEmail = _options.UrlToConfirmEmail + registrationAttempt.HashedEmail;
             var urlToBlockCurrentEmail = _options.UrlToBlockEmail + registrationAttempt.HashedEmail;
+  
             await _checkEmailNotificate.SendCheckEmailNotification(registrationAttempt.EmailAddress,
                 urlToCoufirmCurrentEmail, urlToBlockCurrentEmail);
 

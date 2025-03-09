@@ -1,5 +1,5 @@
 ﻿using auth_servise.Core.Application.Common.Exceptions;
-using auth_servise.Core.Application.Interfaces.Notification;
+using auth_servise.Core.Application.Interfaces.NotificationService;
 using auth_servise.Core.Application.Interfaces.Repositories;
 using auth_servise.Core.Domain;
 using MediatR;
@@ -41,9 +41,18 @@ namespace auth_servise.Core.Application.Commands.Users.RegisterUser
                 DateOfRegistration = registrationAttempt.DateOfRegistration
             };
 
+            var userSettings = new UserSettings()
+            {
+                User = user,
+                IsUseEmailToNotificate = false,
+                IsUsePushToNotificate = false
+            };
+
             _authServiseDbContext.RegistrationAttempts.Remove(registrationAttempt);
             _authServiseDbContext.Users.Add(user);
+            _authServiseDbContext.UsersSettings.Add(userSettings);
             await _authServiseDbContext.SaveChangesAsync(cancellationToken);
+
             await _sendEmailInfoToNotificationService.SendEmailInfoToNotificationService(user.Id, user.EmailAddress!);
 
             return user.Id;

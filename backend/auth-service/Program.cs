@@ -1,13 +1,14 @@
 using auth_servise.Core.Application.Common.Mappings;
 using auth_servise.Core.Application.Interfaces.Auth;
-using auth_servise.Core.Application.Interfaces.Notification;
+using auth_servise.Core.Application.Interfaces.NotificationService;
 using auth_servise.Core.Application.Interfaces.RabbitMq;
 using auth_servise.Core.Application.Interfaces.Repositories;
 using auth_servise.Infrastructure.Jwt;
-using auth_servise.Infrastructure.Notification;
+using auth_servise.Infrastructure.Options;
 using auth_servise.Infrastructure.PasswordHasher;
 using auth_servise.Infrastructure.Persistence;
 using auth_servise.Infrastructure.RabbitMq;
+using auth_servise.Infrastructure.UsedServices.Connectors;
 using auth_servise.Presentation.HostedServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -21,7 +22,10 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services = builder.Services;
 
+services.Configure<ServiceEnvironmentOptions>(configuration.GetSection(nameof(ServiceEnvironmentOptions)));
+
 services.Configure<RabbitMqOptions>(configuration.GetSection(nameof(RabbitMqOptions)));
+
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
 services.Configure<ServicesOptions>(configuration.GetSection(nameof(ServicesOptions))); // not used
@@ -99,9 +103,9 @@ services.AddTransient<IHasher, Hasher>();
 services.AddTransient<IJwtProvider, JwtProvider>();
 
 // Notificate
-services.AddTransient<ISendEmailInfoToNotificationService, EmailNotificationServiceConnector>();
-services.AddTransient<IManageNotificationUserSettings, EmailNotificationServiceConnector>();
-services.AddTransient<ICheckEmailNotification, EmailNotificationServiceConnector>();
+services.AddTransient<ISendEmailInfoToNotificationService, NotificationServiceConnector>();
+services.AddTransient<IManageNotificationUserSettings, NotificationServiceConnector>();
+services.AddTransient<ICheckEmailNotificationByRA, NotificationServiceConnector>();
 
 services.AddCors(options =>
 {
@@ -126,10 +130,10 @@ app.UseSwaggerUI();
 // Init BD
 using (var scope = app.Services.CreateScope())
 {
-    var serviceProvaider = scope.ServiceProvider;
+    var serviceProvider = scope.ServiceProvider;
     try
     {
-        var context = serviceProvaider.GetRequiredService<AuthServiseDbContext>();
+        var context = serviceProvider.GetRequiredService<AuthServiseDbContext>();
         var adminOptions = configuration.GetSection(nameof(AdminSettingsOptions)).Get<AdminSettingsOptions>();
         var passwordHasher = app.Services.GetRequiredService<IHasher>();
         DbInitializer.Initialize(context, adminOptions, passwordHasher);
