@@ -12,15 +12,18 @@ namespace auth_servise.Presentation.HostedServices
         private readonly int _minutesOfRALifetime;
         private readonly int _minutesToDelay;
         private readonly IServiceProvider _appServiceProvider;
+        private readonly ILogger<DeleteOldRegistrationAttemptsService> _logger;
 
         public DeleteOldRegistrationAttemptsService(IOptions<DeleteOldRegistrationAttemptsServiceOptions> options,
-            IServiceProvider appServiceProvider)
+            IServiceProvider appServiceProvider,
+            ILogger<DeleteOldRegistrationAttemptsService> logger)
         {
             _options = options.Value;
             _isNeedToDeleteOldRA = _options.IsNeedToDeleteOldRA;
             _minutesOfRALifetime = _options.MinutesOfRALifetime;
             _minutesToDelay = _options.MinutesToDelay;
             _appServiceProvider = appServiceProvider;
+            _logger = logger;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -34,12 +37,17 @@ namespace auth_servise.Presentation.HostedServices
                         RemovalTime = DateTime.UtcNow.AddMinutes(-_minutesOfRALifetime),
                     };
 
+                    var deletedCount = 0;
+
                     using (var scope = _appServiceProvider.CreateScope())
                     {
                         var mediator = scope.ServiceProvider.GetService<IMediator>();
 
-                        await mediator.Send(command);
+                        deletedCount = await mediator.Send(command);
                     }
+
+                    _logger.LogInformation("Request \"DeleteOldRegistrationAttemptCommand\" by HostedServise completed. Count of deleted RegistrationAttempts: \"{deletedCount}\".",
+                    deletedCount);
 
                     await Task.Delay(_minutesToDelay * 60000, stoppingToken);
                 }

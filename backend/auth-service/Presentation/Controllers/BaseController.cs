@@ -5,11 +5,16 @@ namespace auth_servise.Presentation.Controllers
 {
     [ApiController]
     [Route("api/auth/[controller]/[action]")]
-    public abstract class BaseController : ControllerBase
+    public abstract class BaseController<T> : ControllerBase where T : BaseController<T>
     {
         private IMediator _mediator;
         protected IMediator Mediator =>
             _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
+        private ILogger<T> _logger;
+
+        protected ILogger Logger =>
+            _logger ??= HttpContext.RequestServices.GetService<ILogger<T>>();
 
         internal Guid UserId => !User.Identity.IsAuthenticated
             ? Guid.Empty

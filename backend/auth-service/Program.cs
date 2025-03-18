@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Reflection;
 using System.Text;
 using static auth_servise.Presentation.HostedServices.ServicesOptions;
@@ -21,6 +23,8 @@ using static auth_servise.Presentation.HostedServices.ServicesOptions;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services = builder.Services;
+
+var applicationTag = configuration.GetSection("ApplicationTag").Value;
 
 services.Configure<ServiceEnvironmentOptions>(configuration.GetSection(nameof(ServiceEnvironmentOptions)));
 
@@ -39,6 +43,12 @@ services.Configure<Urls>(configuration
 
 services.Configure<AdminSettingsOptions>(configuration.GetSection(nameof(AdminSettingsOptions)));
 
+//Serilog
+services.AddSerilog(new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/auth-service-logs.txt", rollingInterval: RollingInterval.Month)
+    .CreateLogger());
 
 services.AddControllers();
 services.AddAutoMapper(config =>
@@ -49,7 +59,6 @@ services.AddAutoMapper(config =>
 });
 
 // HostedServises
-
 services.AddHostedService<DeleteOldRegistrationAttemptsService>();
 
 // RabbitMq
@@ -117,15 +126,45 @@ services.AddCors(options =>
     });
 });
 
+// Swagger
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+
+services.ConfigureSwaggerGen(options =>
+{
+    options.SwaggerDoc(applicationTag, new OpenApiInfo
+    {
+        Version = applicationTag,
+        Title = "Auth-Service API",
+        Description = "An ASP.NET Core Web API for managing users and their access rights.",
+        TermsOfService = new Uri("https://github.com/Vinograd2702/MyAssistant"),
+        Contact = new OpenApiContact
+        {
+            Name = "my mail \"grublyakvlad@yandex.ru\"",
+            Email = "grublyakvlad@yandex.ru"
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Project License",
+            Url = new Uri("https://github.com/Vinograd2702/MyAssistant/blob/master/LICENSE")
+        }
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/" + applicationTag + "/swagger.json", applicationTag);
+    options.RoutePrefix = "swagger";
+});
 
 // Init BD
 using (var scope = app.Services.CreateScope())
@@ -154,7 +193,6 @@ catch(Exception ex)
 {
 
 }
-
 
 
 app.UseHttpsRedirection();

@@ -28,17 +28,20 @@ namespace auth_servise.Infrastructure.RabbitMq
 
         private readonly IServiceProvider _appServiceProvider;
 
+        private readonly ILogger<RabbitMqService> _logger;
+
         public RabbitMqService(IOptions<ServiceEnvironmentOptions> serviceEnvironmentOptions, 
             IOptions<RabbitMqOptions> rabbitMqOptions,
-            IServiceProvider appServiceProvider) 
+            IServiceProvider appServiceProvider,
+            ILogger<RabbitMqService> logger)
         {
             _appServiceProvider = appServiceProvider;
 
             _serviceEnvironmentOptions = serviceEnvironmentOptions.Value;
             _rabbitMqOptions = rabbitMqOptions.Value;
 
-            _connectionFactory = new ConnectionFactory() 
-            { 
+            _connectionFactory = new ConnectionFactory()
+            {
                 HostName = _rabbitMqOptions.HostName,
                 UserName = _rabbitMqOptions.UserName,
                 Password = _rabbitMqOptions.UserPassword
@@ -53,6 +56,8 @@ namespace auth_servise.Infrastructure.RabbitMq
             {
                 _queueForExternalInteractionServices.Add(serviceQueue, serviceQueue + "Queue");
             }
+
+            _logger = logger;
         }
 
         public async Task CreateConnection()
@@ -119,11 +124,13 @@ namespace auth_servise.Infrastructure.RabbitMq
             
             if(isCorrectMessage == false || message == null)
             {
-                Console.WriteLine("Unknown message type resive.");
+                _logger.LogWarning("Queue has unknown message type.");
             }
 
             else
             {
+                _logger.LogInformation("Process Json Message Task Report: {message}", message.Description);
+
                 var command = new SetQueueTaskStatusCommand
                 {
                     TaskId = message.TaskId,
@@ -140,7 +147,7 @@ namespace auth_servise.Infrastructure.RabbitMq
                         command.Status = Core.Domain.StatusOfTask.Failure;
                         break;
                     default:
-                        Console.WriteLine("Unknown message type resive.");
+                        _logger.LogWarning("Queue has unknown message type.");
                         command.Status = Core.Domain.StatusOfTask.Error;
                         break;
                 }

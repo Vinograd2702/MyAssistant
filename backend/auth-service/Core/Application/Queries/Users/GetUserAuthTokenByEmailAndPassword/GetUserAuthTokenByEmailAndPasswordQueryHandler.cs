@@ -27,11 +27,11 @@ namespace auth_servise.Core.Application.Queries.Users.GetUserAuthTokenByEmailAnd
             CancellationToken cancellationToken)
         {
             var entity = await _authServiseDbContext.Users
-                .FirstOrDefaultAsync(u => u.EmailAddress == request.EmailAdress, cancellationToken);
+                .FirstOrDefaultAsync(u => u.EmailAddress == request.EmailAddress, cancellationToken);
 
             if (entity == null)
             {
-                throw new NotFoundEntityException(nameof(User), request.EmailAdress);
+                throw new NotFoundEntityException(nameof(User), request.EmailAddress);
             }
 
             if (_passwordHasher.VerifyPassword(request.Password, entity.PasswordHash))
@@ -42,7 +42,7 @@ namespace auth_servise.Core.Application.Queries.Users.GetUserAuthTokenByEmailAnd
             }
             else
             {
-                throw new NotFoundEntityException(nameof(User), request.EmailAdress);
+                throw new NotFoundEntityException(nameof(User), request.EmailAddress);
             }
         }
     }

@@ -2,7 +2,7 @@
 {
     public record LoginUserRequest
     {
-        public string EmailAddress { get; init; }
+        public string EmailAdress { get; init; }
         public string Password { get; init; }
     }
 }

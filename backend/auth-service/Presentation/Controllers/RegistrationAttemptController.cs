@@ -11,13 +11,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace auth_servise.Presentation.Controllers
 {
-    public class RegistrationAttemptController : BaseController
+    public class RegistrationAttemptController : BaseController<RegistrationAttemptController>
     {
+        /// <summary>
+        /// Get all not detailed Registration attempt
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// <b>Note:</b> Admin role only.
+        /// </remarks>
+        /// <response code="200">Return all Registration attempts successful</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="401">Unauthorized</response>
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<RegistrationAttempt>>> GetAllRegistrationAttemptsList()
         {
-            var query = new GetRegistrationAttemptsListQuery 
+            var query = new GetRegistrationAttemptsListQuery
             {
                 UserRole = UserRole
             };
@@ -28,19 +38,36 @@ namespace auth_servise.Presentation.Controllers
             {
                 response = await Mediator.Send(query);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
+                Logger.LogError("Request \"GetAllRegistrationAttemptsList\" for UserId \"{UserId}\" completed with error \"{ex}\".", 
+                    UserId, ex.Message);
                 return Unauthorized();
             }
             catch (Exception ex)
             {
+                Logger.LogError("Request \"GetAllRegistrationAttemptsList\" for UserId \"{UserId}\" completed with error \"{ex}\".", 
+                    UserId, ex.Message);
                 return BadRequest(ex.Message);
             }
 
+            Logger.LogInformation("Request \"GetAllRegistrationAttemptsList\" for UserId \"{UserId}\" completed.", 
+                UserId);
 
             return Ok(response);
         }
 
+        /// <summary>
+        /// Get detailed Registration attempt
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// <b>Note:</b> Admin role only.
+        /// </remarks>
+        /// <response code="200">Return Registration attempt successful</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Not found</response>
         [Authorize]
         [HttpGet]
         [Route("{registrationAttemptId?}")]
@@ -59,22 +86,51 @@ namespace auth_servise.Presentation.Controllers
             {
                 response = await Mediator.Send(query);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
+                Logger.LogError("Request \"GetRegistrationAttemptById\" for UserId \"{UserId}\" completed with error \"{ex}\". Used query: \"{query}\".",
+                    UserId, ex.Message, query);
+
                 return Unauthorized();
             }
             catch (NotFoundEntityException ex)
             {
+                Logger.LogError("Request \"GetRegistrationAttemptById\" for UserId \"{UserId}\" completed with error \"{ex}\". Used query: \"{query}\".", 
+                    UserId, ex.Message, query);
+
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
+                Logger.LogError("Request \"GetRegistrationAttemptById\" for UserId \"{UserId}\" completed with error \"{ex}\". Used query: \"{query}\".", 
+                    UserId, ex.Message, query);
+
                 return BadRequest(ex.Message);
             }
+
+            Logger.LogInformation("Request \"GetRegistrationAttemptById\" for UserId \"{UserId}\" completed. Used query: \"{query}\".", 
+                UserId, query);
 
             return Ok(response);
         }
 
+        /// <summary>
+        /// Create Registration attempt and send confirm Email
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// <b>Note:</b> Available without authorization. "login" and "emailAddress" must be unique. After create Registration attempt user must read email message and confirm registration before automatically delete old registration attempt.
+        /// <b>Sample request:</b>
+        ///
+        ///     POST /api/auth/RegistrationAttempt/CreateRegistrationAttempt
+        ///     {
+        ///          "login": "string",
+        ///          "emailAddress": "string",
+        ///          "password": "string"
+        ///     }
+        /// </remarks>
+        /// <response code="200">Create was successful</response>
+        /// <response code="400">Bad request</response>
         [HttpPost]
         public async Task<IActionResult> CreateRegistrationAttempt
             ([FromBody] CreataRegistrationAttemptRequest request)
@@ -85,19 +141,42 @@ namespace auth_servise.Presentation.Controllers
                 EmailAddress = request.EmailAddress,
                 Password = request.Password
             };
-            
+
             try
             {
                 await Mediator.Send(command);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                Logger.LogError("Request \"CreateRegistrationAttempt\" completed with error \"{ex}\". Used query email: \"{email}\". Used query login: \"{login}\"",
+                    ex.Message, command.EmailAddress, command.Login);
+
                 return BadRequest(ex.Message);
             }
+
+            Logger.LogInformation("Request \"CreateRegistrationAttempt\" completed. Used query email: \"{email}\". Used query login: \"{login}\"",
+                command.EmailAddress, command.Login);
 
             return Ok();
         }
 
+        /// <summary>
+        /// Delete a Registration Attempt by id
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// <b>Note:</b> Admin role only.
+        /// <b>Sample request:</b>
+        /// 
+        ///     DELETE /api/auth/RegistrationAttempt/DeleteRegistrationAttemptById
+        ///     {
+        ///        "id": GUID
+        ///     }
+        /// </remarks>
+        /// <response code="200">Delete was successful</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Not found</response>
         [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteRegistrationAttemptById
@@ -113,22 +192,48 @@ namespace auth_servise.Presentation.Controllers
             {
                 await Mediator.Send(command);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
+                Logger.LogError("Request \"DeleteRegistrationAttemptById\" for UserId \"{UserId}\" completed with error \"{ex}\". Used command: \"{command}\".", 
+                    UserId, ex.Message, command);
+
                 return Unauthorized();
             }
             catch (NotFoundEntityException ex)
             {
+                Logger.LogError("Request \"DeleteRegistrationAttemptById\" for UserId \"{UserId}\" completed with error \"{ex}\". Used command: \"{command}\".",
+                    UserId, ex.Message, command);
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);      
+                Logger.LogError("Request \"DeleteRegistrationAttemptById\" for UserId \"{UserId}\" completed with error \"{ex}\". Used command: \"{command}\".",
+                    UserId, ex.Message, command);
+                return BadRequest(ex.Message);
             }
+
+            Logger.LogInformation("Request \"DeleteRegistrationAttemptById\" for UserId \"{UserId}\" completed. Used command: \"{command}\".", 
+                UserId, command);
 
             return Ok();
         }
 
+        /// <summary>
+        /// Delete a Registration Attempt older, than RemovalTime
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// <b>Note:</b> Admin role only.
+        /// <b>Sample request:</b>
+        /// 
+        ///     DELETE /api/auth/RegistrationAttempt/DeleteOldRegistrationAttempts
+        ///     {
+        ///        "RemovalTime": DateTime
+        ///     }
+        /// </remarks>
+        /// <response code="200">Delete was successful</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="401">Unauthorized</response>
         [Authorize]
         [HttpDelete]
         public async Task<ActionResult<int>> DeleteOldRegistrationAttempts
@@ -145,14 +250,23 @@ namespace auth_servise.Presentation.Controllers
             {
                 response = await Mediator.Send(command);
             }
-            catch(UnauthorizedAccessException)
+            catch(UnauthorizedAccessException ex)
             {
+                Logger.LogError("Request \"DeleteOldRegistrationAttempts\" for UserId \"{UserId}\" completed with error \"{ex}\". Used command: \"{command}\".",
+                    UserId, ex.Message, command);
+
                 return Unauthorized();
             }
             catch(Exception ex)
             {
+                Logger.LogError("Request \"DeleteOldRegistrationAttempts\" for UserId \"{UserId}\" completed with error \"{ex}\". Used command: \"{command}\".",
+                    UserId, ex.Message, command);
+
                 return BadRequest(ex.Message);
             }
+
+            Logger.LogInformation("Request \"DeleteOldRegistrationAttempts\" for UserId \"{UserId}\" completed. Used command: \"{command}\".",
+                UserId, command);
 
             return Ok(response);
         }

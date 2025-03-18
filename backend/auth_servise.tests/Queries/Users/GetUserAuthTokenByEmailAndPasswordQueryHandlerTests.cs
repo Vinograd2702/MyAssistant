@@ -19,7 +19,7 @@ namespace auth_servise.tests.Queries.Users
             var result = await handler.Handle(
                 new GetUserAuthTokenByEmailAndPasswordQuery
                 {
-                    EmailAdress = "Example@example.com",
+                    EmailAddress = "Example@example.com",
                     Password = "QWERTYUIOPASDFGHJK"
                 },
                 CancellationToken.None);
@@ -42,7 +42,7 @@ namespace auth_servise.tests.Queries.Users
                 await handler.Handle(
                     new GetUserAuthTokenByEmailAndPasswordQuery
                     {
-                        EmailAdress = "WrongEmail@example.com",
+                        EmailAddress = "WrongEmail@example.com",
                         Password = "QWERTYUIOPASDFGHJK"
                     },
                     CancellationToken.None));
@@ -60,7 +60,7 @@ namespace auth_servise.tests.Queries.Users
                 await handler.Handle(
                     new GetUserAuthTokenByEmailAndPasswordQuery
                     {
-                        EmailAdress = "Example@example.com",
+                        EmailAddress = "Example@example.com",
                         Password = "WrongPassword"
                     },
                     CancellationToken.None));

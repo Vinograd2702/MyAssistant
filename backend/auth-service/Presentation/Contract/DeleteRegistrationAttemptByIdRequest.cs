@@ -1,4 +1,6 @@
-﻿namespace auth_servise.Presentation.Contract
+﻿using System.Xml.Serialization;
+
+namespace auth_servise.Presentation.Contract
 {
     public record DeleteRegistrationAttemptByIdRequest
     {
