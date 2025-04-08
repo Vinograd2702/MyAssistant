@@ -1,0 +1,9 @@
+{
+    "short_name": "My-Assistant",
+    "name": "My-Assistant web app",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+}
+  
