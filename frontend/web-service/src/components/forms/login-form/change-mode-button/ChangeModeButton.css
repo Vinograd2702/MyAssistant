@@ -1,0 +1,27 @@
+.button-block {
+    position: relative;
+    height: 45px;
+    width: 158px;
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    border-width: 0;
+    padding: 0%;
+    
+
+    font-size: 20px;
+    font-family: "Anonymous Pro"; 
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    
+}
+
+.is-active {
+    background-color: inherit;
+    color: #000;
+}
+
+.is-inactive {
+    background-color: inherit;
+    color: #FFFFFF;
+}

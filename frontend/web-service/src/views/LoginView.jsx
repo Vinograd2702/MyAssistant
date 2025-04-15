@@ -1,7 +1,11 @@
+import LoginForm from 'components/forms/login-form/LoginForm'
+import './LoginView.css';
+
+
 const LoginView = () => {
     return(
-        <div>
-            <h1>LoginView</h1>
+        <div id='container'>
+            <LoginForm />
         </div>
     )
 }
