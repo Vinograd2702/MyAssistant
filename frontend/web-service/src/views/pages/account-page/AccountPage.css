@@ -1,0 +1,171 @@
+.page {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: "Anonymous Pro"; 
+}
+
+.head {
+    width: auto;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.user-login {
+    width: 70%;
+    flex: 1 0 auto;
+}
+
+.exit-button {
+    right: 0px;
+    width: 120px;
+    height: 50px;
+    flex: 0 0 auto;
+    background-color: #FF6767;
+    border-radius: 25px;
+    border-width: 0;
+    padding: 0%;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: inherit;
+    font-style: normal;
+    text-align: center;
+}
+
+.page-content {
+    padding: 15px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #9C9C9C;
+    margin: 0%;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+
+span {
+    font-size: 16px;
+}
+
+.save-user-settings-button {
+    right: 0px;
+    width: 270px;
+    height: 50px;
+    flex: 0 0 auto;
+    background-color: #AFFF69;;
+    border-radius: 25px;
+    border-width: 0;
+    padding: 0%;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: inherit;
+    font-style: normal;
+    text-align: center;
+}
+
+.save-user-settings-button-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    font-family: "Anonymous Pro";
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    outline: none;
+    padding: 0%;
+    
+}
+
+.notify-container {
+    width: 100px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input[type="checkbox"] {
+    margin: 0%;
+    accent-color: #AFFF69;
+    margin: 6px;
+}
+
+span {
+    font-size: 16px;
+    font-weight: 400;   
+}
+/*
+textarea:focus, input:focus
+{
+  outline: none;
+}
+
+/*
+input:active,
+input:hover,
+input:focus {
+outline: none;
+}
+
+/*
+
+
+.nav-bar {
+    width: auto;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border: 1px solid;
+    border-color: #D9D9D9;
+}
+
+
+.wrapper {
+    display: flex;
+	flex-direction: column;
+    height: 100vb;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.nav-bar {
+    flex: 0 0 auto;
+}
+
+.login-form-action-button {
+    width: 270px;
+    height: 50px;
+    background-color: #AFFF69;
+
+    border-radius: 25px;
+    border-width: 0;
+    padding: 0%;
+    
+    font-size: 20px;
+    font-family: "Anonymous Pro"; 
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+}*/

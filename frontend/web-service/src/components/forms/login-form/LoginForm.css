@@ -1,5 +1,7 @@
 .login-form-container {
     position: relative;
+    width: 316px;
+    height: 170px;
 }
 
 .input-login-form {

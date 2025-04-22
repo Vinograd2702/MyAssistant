@@ -1,7 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from 'hooks/use-auth';
 
+// Pages
+import HomePage from './pages/home-page/HomePage'; 
+import SchedulePage from './pages/schedule-page/SchedulePage'; 
+import AccountPage from './pages/account-page/AccountPage'; 
+import TemplateCreatorPage from './pages/template-creator-page/TemplateCreatorPage'; 
+
+import NavBar from 'components/nav-bar/NavBar'
+
+import './MainView.css';
 
 const MainView = () => {
 
@@ -18,8 +27,16 @@ const MainView = () => {
 
 
     return(
-        <div>
-            <h1>MainView</h1>
+        <div className='wrapper'>
+            <div className='content'>
+                <Routes>
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/schedule" element={<SchedulePage />} />
+                    <Route path="/account" element={<AccountPage />} />
+                    <Route path="/template_creator" element={<TemplateCreatorPage />} />
+                </Routes>
+            </div>
+            <NavBar className='nav-bar' />
         </div>
     )
 }

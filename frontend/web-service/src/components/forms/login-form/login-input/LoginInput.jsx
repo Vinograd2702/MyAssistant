@@ -4,8 +4,6 @@ const LoginInput = ({id, type, placeholder, value, setValue}) => {
     
     const handleChange = (e) => {
         const { id, value } = e.target;
-        console.log(value);
-        console.log(id);
         setValue(value)
     }
 

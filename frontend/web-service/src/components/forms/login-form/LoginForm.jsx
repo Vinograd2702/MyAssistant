@@ -1,7 +1,9 @@
-import React from 'react'
-import LoginInput from './login-input/LoginInput'
-import ChangeModeButton from './change-mode-button/ChangeModeButton'
-import './LoginForm.css'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {createRegistrationAttempt, loginUser} from 'store/user/userSlice';
+import LoginInput from './login-input/LoginInput';
+import ChangeModeButton from './change-mode-button/ChangeModeButton';
+import './LoginForm.css';
 
 const LoginForm = () => {
 
@@ -14,6 +16,8 @@ const LoginForm = () => {
     const [singUpLogin, setSingUpLogin] = React.useState("");
     const [singUpPassword, setSingUpPassword] = React.useState("");
     const [singUpConfirmPassword, setSingUpConfirmPassword] = React.useState("");
+
+    const dispatch = useDispatch();
 
     const buttonSwitchModeHandle = (mode) => {
         setFormMode(mode);
@@ -29,9 +33,26 @@ const LoginForm = () => {
         console.log(singInEmail);
     };
 
-    const buttonActionHandle = () => {
-        console.log("use action");
+    const buttonSingUpHandle = () => {
+        //сделать валидацию для регистрации здесь, сравнить два введенных пароля
+        dispatch(createRegistrationAttempt({login: singUpLogin, emailAddress: singUpEmail, password: singUpPassword}));
+        // показать ожидание ответа, ошибку, если не получилось сделать запрос 
+        // и отчистить форму только при успешном выполнении запроса о регистрации
+        setSingUpEmail("");
+        setSingUpLogin("");
+        setSingUpPassword("");
+        setSingUpConfirmPassword("");
+
     };
+
+    const buttonSingInHandle = () => {
+        //сделать валидацию для регистрации здесь, сравнить два введенных пароля
+        dispatch(loginUser({emailAddress: singInEmail, password: singInPassword}));
+        // сделать ожидание выполнения запроса и только потом срабуотает редирект
+        // если запрос будет выполнен не верно - показать ошибку
+        // форму лучше не отчищать
+    };
+
 
     switch(formMode) {
         case "sing-in":
@@ -50,7 +71,7 @@ const LoginForm = () => {
                         <LoginInput id="input-login-password" type="password" placeholder="Пароль" value={singInPassword} setValue={setSingIpPassword}/>
                     </div>
                     <div id="login-mode-action-container" className='login-form-action-container'>
-                        <button className="login-form-action-button" onClick={buttonActionHandle}>Войти</button>
+                        <button className="login-form-action-button" onClick={buttonSingInHandle}>Войти</button>
                     </div>
                 </div>
             );
@@ -73,7 +94,7 @@ const LoginForm = () => {
                         <LoginInput id="input-login-confirm-pasword" type="password" placeholder="Подтвердите пароль" value={singUpConfirmPassword} setValue={setSingUpConfirmPassword} />
                     </div>
                     <div id="register-mode-action-container" className='login-form-action-container'>
-                        <button className="login-form-action-button" onClick={buttonActionHandle}>Создать аккаунт</button>
+                        <button className="login-form-action-button" onClick={buttonSingUpHandle}>Создать аккаунт</button>
                     </div>
                 </div>
             );

@@ -122,7 +122,9 @@ services.AddCors(options =>
     {
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
-        policy.AllowAnyOrigin();
+        policy.WithOrigins("http://localhost:3000");
+        //policy.AllowAnyOrigin();
+        policy.AllowCredentials();
     });
 });
 

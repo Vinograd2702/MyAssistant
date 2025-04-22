@@ -1,15 +1,11 @@
 import { useSelector } from "react-redux";
 
 export function useAuth() {
-    const {id, login, firstName, lastName, patronymic, phoneNumber} = useSelector(state => state.user);
+    const {id, login} = useSelector(state => state.user);
 
     return {
-        isAuth: !!login,
+        isAuth: (document.cookie.indexOf(process.env.REACT_APP_AUTH_COOKIE) == 0),
         id,
-        login,
-        firstName,
-        lastName,
-        patronymic,
-        phoneNumber
+        login
     };
 }

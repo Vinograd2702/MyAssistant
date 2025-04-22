@@ -6,13 +6,10 @@ import LoginView from './views/LoginView';
 
 function App() {
     return(
-        <div>
-            <h1>App</h1>
-            <Routes>
-                <Route path="/" element={<MainView />} />
-                <Route path="/Login" element={<LoginView />} />
-            </Routes>     
-        </div>
+        <Routes>
+            <Route path="/*" element={<MainView />} />
+            <Route path="/login" element={<LoginView />} />
+        </Routes>     
     );
 }
 
