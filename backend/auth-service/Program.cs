@@ -32,7 +32,7 @@ services.Configure<RabbitMqOptions>(configuration.GetSection(nameof(RabbitMqOpti
 
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
-services.Configure<ServicesOptions>(configuration.GetSection(nameof(ServicesOptions))); // not used
+services.Configure<ServicesOptions>(configuration.GetSection(nameof(ServicesOptions)));
 services.Configure<DeleteOldRegistrationAttemptsServiceOptions>(configuration
     .GetSection(nameof(ServicesOptions))
     .GetSection(nameof(DeleteOldRegistrationAttemptsServiceOptions)));
@@ -116,14 +116,15 @@ services.AddTransient<ISendEmailInfoToNotificationService, NotificationServiceCo
 services.AddTransient<IManageNotificationUserSettings, NotificationServiceConnector>();
 services.AddTransient<ICheckEmailNotificationByRA, NotificationServiceConnector>();
 
+var webClientCorsOrigin = configuration.GetSection("WebClient").GetSection("CorsOrigin").Value;
+
 services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
-        policy.WithOrigins("http://localhost:3000");
-        //policy.AllowAnyOrigin();
+        policy.WithOrigins(webClientCorsOrigin!);
         policy.AllowCredentials();
     });
 });

@@ -1,0 +1,206 @@
+.page-tempedit {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: "Anonymous Pro"; 
+}
+
+.head-tempedit {
+    width: auto;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.head-data-tempedit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.template-name-tempedit {
+    font-size: 20px; 
+    color: #000;
+}
+
+.template-description-tempedit{
+    font-size: 20px;
+    color: #D9D9D9;
+}
+
+.page-content-tempedit {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.templates-block-list-tempedit {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    padding: 10px;
+
+}
+
+
+.button-tempedit {
+    margin-top: 28px;
+}/*настроить индивидуальные стили кнопкам*/
+
+
+.modal-container-blocktype-addblocktotemplate-tempedit {
+    position: absolute;
+    height: 220px;
+    width: 300px;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-modal-container-blocktype-addblocktotemplate-tempedit {
+    height: 25px;
+    width: 300px;
+    color: #000;
+    font-size: 20px;
+    margin: 0px;
+    text-align: center;
+
+}
+
+.select-blocktype-addblocktotemplate-tempedit {
+    height: 160px;
+    width: 280px;
+}
+
+
+.button-addblockblocktype-tempedit {
+    height: 70px;
+    width: 130px;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    margin: 5px;
+}
+
+.container-title-modal-container-blocktype-addblocktotemplate-tempedit {
+    display: flex;
+    width: 300px;
+    flex-direction: row-reverse;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.close-modal-container-blocktype-addblocktotemplate-tempedit {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    color: #D9D9D9;
+    font-size: 20px;
+}
+
+.action-button-container-tempedit {
+    display: flex;
+    flex-direction: row-reverse;
+    height: 50px;
+    width: 160px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+.button-save-tempedit {
+    height: 40px;
+    width: 40px;
+    background-color: #AFFF69;
+    border-width: 0;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 35px;
+}
+
+.button-delete-tempedit {
+    height: 40px;
+    width: 40px;
+    background-color: #FF6767;
+    border-width: 0;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 35px;
+    margin-right: 5px;
+}
+
+.button-addblocktotemplate-tempedit {
+    height: 40px;
+    width: 40px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    border-width: 0;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 100px;
+    margin-right: 5px;
+}
+
+.button-close-tempedit {
+    height: 40px;
+    width: 40px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.add-template-button-tempcreate {
+    height: 30px;
+    width: 250px;
+    background-color: #AFFF69;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    border-width: 0;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

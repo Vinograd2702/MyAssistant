@@ -25,8 +25,15 @@ namespace sports_service.Core.Application.Commands.Templates.UpdateTemplateWorko
                 throw new UnauthorizedAccessException();
             }
 
-            var entityTemplateWorkout = await _sportServiseDbContext.TemplateWorkouts.
-                FirstOrDefaultAsync(TemplateWorkout => TemplateWorkout.Id == request.Id, cancellationToken);
+            var entityTemplateWorkout = await _sportServiseDbContext.TemplateWorkouts
+                .Include(e => e.TemplatesBlockCardio)
+                .Include(e => e.TemplatesBlockStrenght)
+                    .ThenInclude(t => t.Sets)
+                .Include(e => e.TemplatesBlockSplit)
+                    .ThenInclude(t => t.Exercises)
+                .Include(e => e.TemplatesBlockWarmUp)
+                    .ThenInclude(t => t.Exercises)
+                .FirstOrDefaultAsync(TemplateWorkout => TemplateWorkout.Id == request.Id, cancellationToken);
 
             if (entityTemplateWorkout == null)
             {

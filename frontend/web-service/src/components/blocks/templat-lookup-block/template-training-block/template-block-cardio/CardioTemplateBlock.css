@@ -1,0 +1,102 @@
+.container-cardio-template-block {
+    margin: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+}
+
+.container-title-cardio-template-block {
+    height: 30px;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.title-cardio-template-block {
+    height: auto;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    margin-left: 5px;
+    color: #000;
+}
+
+.hr-cardio-template-block {
+    border: none;
+    background-color: #D9D9D9;
+    color: #D9D9D9;
+    height: 1px;
+}
+
+.container-move-block-buttons-cardio-template-block {
+    height: 30px;
+    width: 15px;
+}
+
+.move-button-block-cardio-template-block {
+    height: 15px;
+    width: 15px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+
+.plug-move-button-block-cardio-template-block {
+    height: 15px;
+    width: 15px;
+}
+
+.container-parameter-cardio-template-block {
+    width: 200px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container-property-cardio-template-block{
+    height: 16px;
+    width: 88px;
+    border-right: 1px solid #9C9C9C;
+}
+
+.input-parametername-cardio-template-block{
+    height: 16px;
+    width: calc(100% - 90px);
+    text-align: center;
+
+}
+
+.input-parametervalue-cardio-template-block {
+    height: 16px;
+    width: calc(100% - 90px);
+    text-align: center;
+}
+
+.input-secondsofduration-cardio-template-block {
+    height: 16px;
+    width: calc(100% - 115px);
+    text-align: center;
+}
+
+.input-resttime-cardio-template-block {
+    height: 16px;
+    width: calc(100% - 115px);
+    text-align: center;
+}
+
+.delete-button-block-cardio-template-block {
+    height: 25px;
+    width: 25px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    color: #D9D9D9;
+    font-size: 20px;
+}

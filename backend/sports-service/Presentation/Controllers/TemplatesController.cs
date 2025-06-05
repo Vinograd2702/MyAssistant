@@ -88,7 +88,7 @@ namespace sports_service.Presentation.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<TemplateDetailsVm>> GetTemplateWorkoutById([FromRoute] Guid Id)
+        public async Task<ActionResult<TemplateDetailsVm>> GetTemplateWorkoutById([FromQuery] Guid Id)
         {
             var query = new GetTemplateVmQuery
             {

@@ -27,6 +27,18 @@ namespace sports_service.Core.Application.Queries.Templates.GetTemplateVm
             }
 
             var entity = await _sportServiseDbContext.TemplateWorkouts
+                .Include(e => e.TemplatesBlockCardio)
+                    .ThenInclude(t => t.ExerciseType)
+                .Include(e => e.TemplatesBlockStrenght)
+                    .ThenInclude(t => t.Sets)
+                .Include(e => e.TemplatesBlockStrenght)
+                    .ThenInclude(t => t.ExerciseType)
+                .Include(e => e.TemplatesBlockSplit)
+                    .ThenInclude(t => t.Exercises)
+                        .ThenInclude(ex => ex.ExerciseType)
+                .Include(e => e.TemplatesBlockWarmUp)
+                    .ThenInclude(t => t.Exercises)
+                        .ThenInclude(ex => ex.ExerciseType)
                 .FirstOrDefaultAsync(e => e.Id == request.Id
                 && e.UserId == request.UserId);
 

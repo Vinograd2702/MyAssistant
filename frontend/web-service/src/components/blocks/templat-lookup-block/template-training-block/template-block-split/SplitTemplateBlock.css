@@ -1,0 +1,169 @@
+.container-split-template-block {
+    margin: 5px;
+    padding: 5px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.exercise-template-block {
+    border-radius: 30px;
+    border: 1px solid #000000;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container-move-block-buttons-split-template-block {
+    height: 30px;
+    width: 15px;
+}
+
+.container-move-exercise-buttons-split-template-block {
+    height: 30px;
+    width: 15px;
+}
+
+.plug-move-button-block-buttons-split-template-block {
+    height: 15px;
+    width: 15px;
+}
+
+.plug-move-button-exercise-buttons-split-template-block {
+    height: 15px;
+    width: 15px;
+}
+
+.move-button-block-buttons-split-template-block {
+    height: 15px;
+    width: 15px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+
+.move-button-exercise-buttons-split-template-block {
+    height: 15px;
+    width: 15px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+
+.content-container-split-template-block {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.delete-button-block-split-template-block {
+    height: 25px;
+    width: 25px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    color: #D9D9D9;
+    font-size: 20px;
+    margin-left: calc(100% - 25px);
+}
+
+.add-exersise-button-block-buttons-split-template-block {
+    position: relative;
+    inset-inline-start: calc(50% - 25px);
+    inset-block-start: 5px;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #9C9C9C;
+    border: 1px solid #9C9C9C;
+    font-size: 22px;
+    text-align: center;
+}
+
+.exercise-list-container-split-template-block {
+    margin-bottom: 10px;
+}
+
+.container-properties-split-template-block {
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.title-exercise-split-template-block {
+    height: auto;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    margin-left: 5px;
+    color: #000;
+}
+
+.delete-exercise-split-template-block {
+    height: 25px;
+    width: 25px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    color: #D9D9D9;
+    font-size: 20px;
+}
+
+.container-exercise-split-template-block {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.container-propertiey-split-template-block{
+    height: 30px;
+    width: 180px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.container-property-title-exercise-split-template-block{
+    height: 16px;
+    width: 70px;
+    border-right: 1px solid #9C9C9C;
+}
+
+.input-exercise-split-template-block{
+    height: 16px;
+    width: calc(100% - 71px);
+    text-align: center;
+}
+
+.container-resttime-split-template-block {
+    width: 200px;
+
+    margin: 5px;
+    margin-left: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container-property-split-template-block {
+    height: 16px;
+    width: 88px;
+    border-right: 1px solid #9C9C9C;
+}
+
+.input-resttime-split-template-block {
+    height: 16px;
+    width: calc(100% - 100px);
+    text-align: center;
+}

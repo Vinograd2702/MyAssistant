@@ -201,6 +201,38 @@ export const updateUserInfoById = createAsyncThunk(
         
     }
 );
+
+export const getUserInfoById = createAsyncThunk(
+    'auth/User/GetUserInfoById',
+    async (data, {rejectWithValue, dispatch}) => {
+        
+        try {
+            const response = await fetch(process.env.REACT_APP_API_URL +
+                'auth/User/GetMyUserInfo', {
+                    mode: 'cors',
+                    method: 'GET',
+                    credentials: "include",
+                    headers: {
+                        'Accept': '*/*',
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            if(!response.ok) {
+                throw new Error('Can\'t load user info. Server error.');
+            }
+
+            const userInfoData = await response.json();
+
+            return userInfoData;
+
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+        
+    }
+);
 //
 const initialState = {
     status: null,
@@ -285,6 +317,23 @@ const userSlice = createSlice({
             state.phoneNumber = action.payload.phoneNumber;
         })
         .addCase(updateUserInfoById.rejected, (state, action) => {
+            state.status = 'rejected';
+            state.error = action.payload;
+        })
+        .addCase(getUserInfoById.pending, (state, action) => {
+            state.status = 'loading';
+            state.error = null;
+        })
+        .addCase(getUserInfoById.fulfilled, (state, action) => {
+            state.status = 'resolved';
+            state.id = action.payload.id;
+            state.login = action.payload.login;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.patronymic = action.payload.patronymic;
+            state.phoneNumber = action.payload.phoneNumber;
+        })
+        .addCase(getUserInfoById.rejected, (state, action) => {
             state.status = 'rejected';
             state.error = action.payload;
         })

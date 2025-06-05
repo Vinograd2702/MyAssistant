@@ -13,7 +13,7 @@ namespace sports_service.Core.Application.ViewModels.Templates
             = new List<TemplateBlockStrenghtDetailsVm>();
         public IEnumerable<TemplateBlockSplitDetailsVm> TemplatesBlockSplit { get; set; }
             = new List<TemplateBlockSplitDetailsVm>();
-        public IEnumerable<TemplateBlockWarmUpDetailsVm> TemplatesBlockWarmUp { get; set;}
+        public IEnumerable<TemplateBlockWarmUpDetailsVm> TemplatesBlockWarmUp { get; set; }
             = new List<TemplateBlockWarmUpDetailsVm>();
     }
 }

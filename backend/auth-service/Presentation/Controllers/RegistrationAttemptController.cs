@@ -1,18 +1,31 @@
 ﻿using auth_servise.Core.Application.Commands.RegistrationAttempts.CreateRegistrationAttempt;
 using auth_servise.Core.Application.Commands.RegistrationAttempts.DeleteOldRegistrationAttempts;
 using auth_servise.Core.Application.Commands.RegistrationAttempts.DeleteRegistrationAttempt;
+using auth_servise.Core.Application.Commands.Users.RegisterUserByEmail;
 using auth_servise.Core.Application.Common.Exceptions;
 using auth_servise.Core.Application.Queries.RegistrationAttempts.GetRegistrationAttemptById;
 using auth_servise.Core.Application.Queries.RegistrationAttempts.GetRegistrationAttemptsList;
 using auth_servise.Core.Domain;
 using auth_servise.Presentation.Contract;
+using auth_servise.Presentation.HostedServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace auth_servise.Presentation.Controllers
 {
     public class RegistrationAttemptController : BaseController<RegistrationAttemptController>
     {
+        private readonly ServicesOptions _options;
+
+        public RegistrationAttemptController(IOptions<ServicesOptions> options)
+        {
+            _options = options.Value;
+        }
+
+
+
+
         /// <summary>
         /// Get all not detailed Registration attempt
         /// </summary>
@@ -156,6 +169,29 @@ namespace auth_servise.Presentation.Controllers
 
             Logger.LogInformation("Request \"CreateRegistrationAttempt\" completed. Used query email: \"{email}\". Used query login: \"{login}\"",
                 command.EmailAddress, command.Login);
+
+            if (_options.IsRegisterUserWithoutWithoutConfirmingEmail)
+            {
+                var registerNewUserCommand = new RegisterUserByEmailCommand
+                {
+                    EmailAddress = request.EmailAddress,
+                };
+
+                try
+                {
+                    await Mediator.Send(registerNewUserCommand);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError("Request \"RegisterUserByEmailCommand\" completed with error \"{ex}\". Used query email: \"{email}\".",
+                        ex.Message, registerNewUserCommand.EmailAddress);
+
+                    return BadRequest(ex.Message);
+                }
+
+                Logger.LogInformation("Request \"RegisterUserByEmailCommand\" completed. Used query email: \"{email}\".",
+                    registerNewUserCommand.EmailAddress);
+            }
 
             return Ok();
         }

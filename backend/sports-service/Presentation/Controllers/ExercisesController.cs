@@ -217,7 +217,7 @@ namespace sports_service.Presentation.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<ExerciseGroupVm>> GetExerciseGroupVm([FromRoute] Guid Id)
+        public async Task<ActionResult<ExerciseGroupVm>> GetExerciseGroupVm([FromQuery] Guid Id)
         {
             var query = new GetExerciseGroupVmQuery
             {
@@ -276,7 +276,7 @@ namespace sports_service.Presentation.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<ExerciseTypeVm>> GetExersiseTypeVm([FromRoute] Guid Id)
+        public async Task<ActionResult<ExerciseTypeVm>> GetExersiseTypeVm([FromQuery] Guid Id)
         {
             var query = new GetExersiseTypeVmQuery
             {

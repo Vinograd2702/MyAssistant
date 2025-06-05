@@ -29,8 +29,6 @@ const LoginForm = () => {
         setSingUpLogin("");
         setSingUpPassword("");
         setSingUpConfirmPassword("");
-
-        console.log(singInEmail);
     };
 
     const buttonSingUpHandle = () => {
@@ -52,7 +50,6 @@ const LoginForm = () => {
         // если запрос будет выполнен не верно - показать ошибку
         // форму лучше не отчищать
     };
-
 
     switch(formMode) {
         case "sing-in":

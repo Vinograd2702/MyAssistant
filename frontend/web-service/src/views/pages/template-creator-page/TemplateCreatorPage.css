@@ -1,0 +1,44 @@
+.page-tempcreate {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: "Anonymous Pro"; 
+}
+
+.head-tempcreate {
+    width: auto;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+}
+
+.page-content-tempcreate {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.user-templates-list-tempcreate {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+
+}
+
+
+.add-template-button-tempcreate {
+    margin-top: 28px;
+}

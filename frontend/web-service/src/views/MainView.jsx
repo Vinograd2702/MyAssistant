@@ -7,6 +7,7 @@ import HomePage from './pages/home-page/HomePage';
 import SchedulePage from './pages/schedule-page/SchedulePage'; 
 import AccountPage from './pages/account-page/AccountPage'; 
 import TemplateCreatorPage from './pages/template-creator-page/TemplateCreatorPage'; 
+import TemplateEditPage from './pages/template-creator-page/template-edit-page/TemplateEditPage'; 
 
 import NavBar from 'components/nav-bar/NavBar'
 
@@ -34,6 +35,7 @@ const MainView = () => {
                     <Route path="/schedule" element={<SchedulePage />} />
                     <Route path="/account" element={<AccountPage />} />
                     <Route path="/template_creator" element={<TemplateCreatorPage />} />
+                    <Route path='/template_edit/:templateid?' element={<TemplateEditPage />} />
                 </Routes>
             </div>
             <NavBar className='nav-bar' />

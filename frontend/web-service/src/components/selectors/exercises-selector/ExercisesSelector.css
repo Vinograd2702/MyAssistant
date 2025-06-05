@@ -1,0 +1,101 @@
+.container-exercises-selector {
+    position: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+
+}
+
+.expand-tree-element-exercises-selector{
+    height: 15px;
+    width: 15px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+
+.collapse-tree-element-exercises-selector{
+    height: 16px;
+    width: 16px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+.edit-tree-element-exercises-selector {
+    height: 16px;
+    width: 16px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+
+.add-element-exercises-selector {
+    height: 16px;
+    width: 16px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+    font-size: 16px;
+    
+}
+
+.no-root-exercises-selector {
+    border-left: 1px solid #D9D9D9;  /* Параметры линии */
+    margin-left: 8px;
+
+
+}
+
+.root-exercises-selector {
+    position: auto;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    max-height: 160px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin-bottom: 10px;
+}
+
+
+.exersise-name-tree-element-exercises-selector {
+    margin-left: 15px;
+}
+
+.exersise-description-tree-element-exercises-selector {
+    color: #B9B9B9;
+    margin-left: 15px;
+    display: block
+}
+
+
+.selected-item-exercises-selector{
+    border: 1px solid #FF6767;
+    border-radius: 15px;
+}
+
+.selected-button-container-exercises-selector {
+    height: 30px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.select-button-exercise-exercises-selector {
+    height: 30px;
+    width: 80px;
+    border-radius: 25px;
+    border-width: 0;
+    padding: 0%;
+    font-size: 14px;
+    font-family: "Anonymous Pro"; 
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    background-color: #AFFF69;
+}
+

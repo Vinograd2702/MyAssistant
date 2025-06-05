@@ -12,10 +12,20 @@ import {
 import storage from 'redux-persist/lib/storage'
 import userReduser from './user/userSlice';
 import userSettingsReduser from './user/userSettingsSlice';
+import {templatesLookupReduser, templateDetailsReduser} from './sport/templates/templatesSlice';
+import {groupsLookupReduser, groupDetailsReduser, typesLookupReduser, typeDetailsReduser} from './sport/execises/execisesSlice'
 
 const rootReduser = combineReducers({
     user: userReduser,
-    userSettings: userSettingsReduser
+    userSettings: userSettingsReduser,
+
+    templatesLookup: templatesLookupReduser,
+    templateDetails: templateDetailsReduser,
+
+    groupsLookup: groupsLookupReduser,
+    groupDetails: groupDetailsReduser,
+    typesLookup: typesLookupReduser,
+    typeDetails: typeDetailsReduser,
 });
 
 const persistConfig = {

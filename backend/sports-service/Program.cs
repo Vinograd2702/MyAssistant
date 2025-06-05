@@ -79,6 +79,19 @@ services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutin
 // JwtAuth
 services.AddTransient<IJwtProvider, JwtProvider>();
 
+var webClientCorsOrigin = configuration.GetSection("WebClient").GetSection("CorsOrigin").Value;
+
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.WithOrigins(webClientCorsOrigin!);
+        policy.AllowCredentials();
+    });
+});
+
 // Swagger
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();

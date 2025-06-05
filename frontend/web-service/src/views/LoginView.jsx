@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from 'hooks/use-auth';
-import LoginForm from 'components/forms/login-form/LoginForm'
+import LoginForm from 'components/forms/login-form/LoginForm';
 import './LoginView.css';
 
 

@@ -7,7 +7,7 @@
         public Guid ExerciseTypeId { get; set; }
         public string ExerciseType { get; set; } = "";
         public int NumberOfSets { get; set; }
-        public IEnumerable<SetInTemplateBlockStrengthDetailsVm> Sets
+        public IEnumerable<SetInTemplateBlockStrengthDetailsVm> Sets {  get; set; }
             = new List<SetInTemplateBlockStrengthDetailsVm>();
         public int? SecondsToRest { get; set; }
     }

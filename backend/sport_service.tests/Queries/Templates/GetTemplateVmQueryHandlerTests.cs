@@ -14,6 +14,7 @@ namespace sport_service.tests.Queries.Templates
             var userId = SportContextFactory.QueriesTestUserId;
             var templateId = SportContextFactory.TemplateWorkoutToQueryId;
 
+            Console.WriteLine("hhh!");
             // Act
             var result = await handler.Handle(
                 new GetTemplateVmQuery

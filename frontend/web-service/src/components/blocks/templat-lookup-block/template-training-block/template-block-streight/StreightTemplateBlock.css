@@ -1,0 +1,159 @@
+.container-streight-template-block {
+    margin: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    border-width: 0;
+    box-shadow: 0px 0px 15px 0px #D9D9D9;
+}
+
+.container-title-streight-template-block {
+    height: 30px;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+.title-streight-template-block {
+    height: auto;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    margin-left: 5px;
+    color: #000;
+}
+
+.hr-streight-template-block {
+    border: none;
+    background-color: #D9D9D9;
+    color: #D9D9D9;
+    height: 1px;
+}
+
+.container-move-block-buttons-streight-template-block {
+    height: 30px;
+    width: 15px;
+}
+
+
+.move-button-block-streight-template-block {
+    height: 15px;
+    width: 15px;
+    padding: 0px;
+    border: 0px;
+    background-color: inherit;
+    color: #D9D9D9;
+}
+
+.plug-move-button-block-streight-template-block {
+    height: 15px;
+    width: 15px;
+}
+
+.container-numberofsets-streight-template-block {
+    width: 200px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container-property-streight-template-block {
+    height: 16px;
+    width: 88px;
+    border-right: 1px solid #9C9C9C;
+}
+
+.value-numberofsets-streight-template-block {
+    height: 16px;
+    width: calc(100% - 131px);
+    text-align: center;
+}
+
+.add-button-numberofsets-streight-template-block {
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #9C9C9C;
+    border: 1px solid #9C9C9C;
+    font-size: 22px;
+    text-align: center;
+}
+
+.reduce-button-numberofsets-streight-template-block{
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #9C9C9C;
+    border: 1px solid #9C9C9C;
+    font-size: 22px;
+    text-align: center;
+}
+
+.plug-numberofsets-streight-template-block{
+    height: 30px;
+    width: 30px;
+}
+
+.container-resttime-streight-template-block {
+    width: 200px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.input-resttime-streight-template-block{
+    height: 16px;
+    width: calc(100% - 100px);
+    text-align: center;
+}
+
+.container-set-streight-template-block {
+    height: 60px;
+    width: 200px;
+    border-radius: 30px;
+    border: 1px solid #000000;
+    margin: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.container-param-set-streight-template-block {
+    height: 30px;
+    width: 180px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.container-property-set-streight-template-block {
+    /*вес контейнер*/
+    height: 16px;
+    width: 70px;
+    border-right: 1px solid #9C9C9C;
+}
+
+.input-set-streight-template-block{
+    height: 16px;
+    width: calc(100% - 71px);
+    text-align: center;
+}
+
+.delete-button-block-streight-template-block {
+    height: 25px;
+    width: 25px;
+    background-color: #FFFFFF;
+    border-width: 0;
+    color: #D9D9D9;
+    font-size: 20px;
+}

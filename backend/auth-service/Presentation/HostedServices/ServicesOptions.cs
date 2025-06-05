@@ -14,5 +14,7 @@
             public string UrlToConfirmEmail { get; set; }
             public string UrlToBlockEmail { get; set; }
         }
+
+        public bool IsRegisterUserWithoutWithoutConfirmingEmail { get; set; }
     }
 }
