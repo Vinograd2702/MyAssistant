@@ -43,9 +43,9 @@ When requesting authorization to log in to the system, the service checks the re
 
 When processing a request, the Back-end service analyzes the authorization cookie and, based on this data, makes a decision on the user's access to the requested resource. 
 
-- For a description of the API authservice - [swagger](:http://194.87.201.90:8081/swagger/index.html)
+- For a description of the API authservice - http://194.87.201.90:8081/swagger/index.html
 
-- For a description of the API sportsservice: - [swagger](:http://194.87.201.90:8082/swagger/index.html) (Description only. Without the received authorization cookie, most methods return 401. It is necessary to authorize the user from one client (for example, my-assistant-dev.ru or postman) and then gain access to the functionality on behalf of this user. In this case, it is necessary to form a request by domain name or directly to the https port.)  
+- For a description of the API sportsservice: - http://194.87.201.90:8082/swagger/index.html (Description only. Without the received authorization cookie, most methods return 401. It is necessary to authorize the user from one client (for example, my-assistant-dev.ru or postman) and then gain access to the functionality on behalf of this user. In this case, it is necessary to form a request by domain name or directly to the https port.)  
 
 ## Comment on webservice.
 
