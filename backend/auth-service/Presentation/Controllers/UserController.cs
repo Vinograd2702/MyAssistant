@@ -57,7 +57,7 @@ namespace auth_servise.Presentation.Controllers
             Logger.LogInformation("Request \"RegisterNewUser\" completed. Used hash email: \"{Hashedemail}\".",
                     command.HashedEmaileByRegistrationAttempt);
 
-            return Ok();
+            return Ok("Account has been successfully created!\r\nNow you can login to the service using your email and password.");
         }
 
         /// <summary>

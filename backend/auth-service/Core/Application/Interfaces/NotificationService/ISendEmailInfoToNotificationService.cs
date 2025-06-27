@@ -2,6 +2,6 @@
 {
     public interface ISendEmailInfoToNotificationService
     {
-        Task SendEmailInfoToNotificationService(Guid userId, string userEmail);
+        public Task SendEmailInfoToNotificationService(Guid userId, string userEmail);
     }
 }

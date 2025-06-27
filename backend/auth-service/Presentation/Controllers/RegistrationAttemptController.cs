@@ -170,7 +170,7 @@ namespace auth_servise.Presentation.Controllers
             Logger.LogInformation("Request \"CreateRegistrationAttempt\" completed. Used query email: \"{email}\". Used query login: \"{login}\"",
                 command.EmailAddress, command.Login);
 
-            if (_options.IsRegisterUserWithoutWithoutConfirmingEmail)
+            if (_options.IsRegisterUserWithoutConfirmingEmail)
             {
                 var registerNewUserCommand = new RegisterUserByEmailCommand
                 {

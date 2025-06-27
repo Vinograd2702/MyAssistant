@@ -47,7 +47,6 @@ namespace auth_servise.Infrastructure.RabbitMq
                 Password = _rabbitMqOptions.UserPassword
             };
 
-
             _queueForCurrentService = _serviceEnvironmentOptions.CurrentService + "Queue";
 
             _queueForExternalInteractionServices = new Dictionary<string, string>();
@@ -154,7 +153,7 @@ namespace auth_servise.Infrastructure.RabbitMq
 
                 using (var scope = _appServiceProvider.CreateScope())
                 {
-                    var serviceProvaider = scope.ServiceProvider;
+                    var serviceProvider = scope.ServiceProvider;
 
                     var mediator = scope.ServiceProvider.GetService<IMediator>();
 

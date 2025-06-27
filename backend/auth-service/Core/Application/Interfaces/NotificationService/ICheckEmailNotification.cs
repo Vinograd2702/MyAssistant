@@ -2,6 +2,6 @@
 {
     public interface ICheckEmailNotificationByRA
     {
-        Task SendCheckEmailNotification(string EmailToSend, string urlToComfirmEmail, string urlToBlockEmail);
+        public Task SendCheckEmailNotification(string EmailToSend, string urlToComfirmEmail, string urlToBlockEmail);
     }
 }
